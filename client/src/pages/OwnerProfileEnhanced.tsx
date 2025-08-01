@@ -136,10 +136,10 @@ const OwnerProfileEnhanced = () => {
     
     try {
       setSubmittingReview(true);
-      await submitOwnerReview(owner.id, reviewForm.rating, reviewForm.comment);
+      await submitOwnerReview(owner._id || owner.id, reviewForm.rating, reviewForm.comment);
       
       // Refresh reviews
-      const updatedReviews = await getOwnerReviews(owner.id);
+      const updatedReviews = await getOwnerReviews(owner._id || owner.id);
       setReviews(updatedReviews);
       
       // Reset form and close modal

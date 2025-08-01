@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getOwners } from '../services/ownerService';
+import type { Owner } from '../services/ownerService';
 import {
   UserGroupIcon,
   MagnifyingGlassIcon,
@@ -19,19 +22,12 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
-interface Owner {
-  id: number;
-  name: string;
+interface OwnerDisplay extends Owner {
   avatar: string;
-  company: string;
   location: string;
   joinDate: string;
-  yearsInBusiness: number;
-  specialties: string[];
   rating: number;
   totalProjects: number;
-  email: string;
-  phone: string;
   territory: string;
   status: 'active' | 'inactive' | 'new';
   awards: number;
@@ -39,7 +35,29 @@ interface Owner {
   bio: string;
 }
 
-const owners: Owner[] = [
+// Loading skeleton component
+const OwnerSkeleton = () => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="p-6">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center">
+          <div className="h-16 w-16 rounded-full bg-gray-200 animate-pulse" />
+          <div className="ml-4 space-y-2">
+            <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+            <div className="h-3 w-24 bg-gray-200 rounded animate-pulse" />
+            <div className="h-3 w-20 bg-gray-200 rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        <div className="h-3 w-full bg-gray-200 rounded animate-pulse" />
+        <div className="h-3 w-full bg-gray-200 rounded animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
+
+const staticOwners: OwnerDisplay[] = [
   {
     id: 1,
     name: "Sarah Johnson",
@@ -144,6 +162,36 @@ const OwnersRoster = () => {
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
+  const [page, setPage] = useState(1);
+
+  // Fetch owners from API
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['owners', page, searchQuery, selectedTerritory, selectedSpecialties],
+    queryFn: () => getOwners({
+      page,
+      limit: 12,
+      search: searchQuery || undefined,
+      specialty: selectedSpecialties.length > 0 ? selectedSpecialties[0] : undefined,
+      state: selectedTerritory !== 'All Territories' ? selectedTerritory : undefined,
+    }),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+
+  // Transform API data to display format
+  const owners: OwnerDisplay[] = data?.data?.map((owner: Owner) => ({
+    ...owner,
+    id: owner._id || owner.id, // Use _id from MongoDB
+    avatar: owner.name.split(' ').map(n => n[0]).join('').toUpperCase(),
+    location: `${owner.address.city}, ${owner.address.state}`,
+    joinDate: new Date(owner.openDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+    rating: owner.rating?.averageRating || owner.stats?.averageRating || 0,
+    totalProjects: owner.stats?.projectsCompleted || 0,
+    territory: owner.address.state,
+    status: 'active' as const,
+    awards: 0,
+    certifications: [],
+    bio: `${owner.name} operates ${owner.company} in ${owner.address.city}, ${owner.address.state}.`,
+  })) || [];
 
   const toggleSpecialty = (specialty: string) => {
     setSelectedSpecialties(prev =>
@@ -165,6 +213,42 @@ const OwnersRoster = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
+
+  // Show loading state
+  if (isLoading && owners.length === 0) {
+    return (
+      <div className="space-y-8">
+        <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg overflow-hidden">
+          <div className="px-6 py-8 sm:px-8 sm:py-10">
+            <div className="h-8 w-48 bg-white/20 rounded animate-pulse mb-3" />
+            <div className="h-5 w-64 bg-white/20 rounded animate-pulse" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <OwnerSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="text-red-600 mb-4">
+          <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Unable to load owners</h3>
+        <p className="text-gray-600 text-center max-w-md">
+          {error instanceof Error ? error.message : 'An error occurred while loading the owners roster. Please try again later.'}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -193,23 +277,25 @@ const OwnersRoster = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
           <UserGroupIcon className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-          <p className="text-3xl font-bold text-gray-900">127</p>
+          <p className="text-3xl font-bold text-gray-900">{data?.total || 0}</p>
           <p className="text-sm text-gray-600">Total Owners</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
           <MapPinIcon className="h-8 w-8 text-green-600 mx-auto mb-2" />
-          <p className="text-3xl font-bold text-gray-900">42</p>
+          <p className="text-3xl font-bold text-gray-900">{new Set(owners.map(o => o.territory)).size || 0}</p>
           <p className="text-sm text-gray-600">States Covered</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
           <StarIcon className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
-          <p className="text-3xl font-bold text-gray-900">4.8</p>
+          <p className="text-3xl font-bold text-gray-900">
+            {owners.length > 0 ? (owners.reduce((sum, o) => sum + o.rating, 0) / owners.length).toFixed(1) : '0.0'}
+          </p>
           <p className="text-sm text-gray-600">Avg. Rating</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
           <BuildingOfficeIcon className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-          <p className="text-3xl font-bold text-gray-900">$125M</p>
-          <p className="text-sm text-gray-600">Combined Revenue</p>
+          <p className="text-3xl font-bold text-gray-900">{owners.length}</p>
+          <p className="text-sm text-gray-600">Active Franchises</p>
         </div>
       </div>
 
@@ -488,11 +574,17 @@ const OwnersRoster = () => {
       )}
 
       {/* Load More */}
-      <div className="text-center">
-        <button className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200">
-          Load More Owners
-        </button>
-      </div>
+      {data?.pagination?.hasNext && (
+        <div className="text-center">
+          <button 
+            onClick={() => setPage(prev => prev + 1)}
+            disabled={isLoading}
+            className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Loading...' : 'Load More Owners'}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

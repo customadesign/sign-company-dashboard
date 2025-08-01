@@ -1,8 +1,9 @@
 // Owner Service for API calls
-import api from '../config/api';
+import api from '../config/axios';
 
 export interface Owner {
-  id: string;
+  _id: string;
+  id: string; // We'll map _id to id in the component
   name: string;
   email: string;
   phone: string;
@@ -29,11 +30,15 @@ export interface Owner {
     instagram?: string;
     website?: string;
   };
-  stats: {
+  stats?: {
     averageRating: number;
     totalRatings: number;
     projectsCompleted: number;
     yearsWithSignWorld: number;
+  };
+  rating?: {
+    averageRating: number;
+    totalRatings: number;
   };
 }
 
@@ -51,11 +56,52 @@ export interface Review {
   status: 'pending' | 'approved' | 'rejected';
 }
 
+// Get all owners
+export const getOwners = async (params?: {
+  page?: number;
+  limit?: number;
+  search?: string;
+  specialty?: string;
+  city?: string;
+  state?: string;
+}): Promise<{
+  data: Owner[];
+  count: number;
+  total: number;
+  pagination: {
+    page: number;
+    limit: number;
+    pages: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}> => {
+  try {
+    const response = await api.get('/owners', { params });
+    // Map _id to id for each owner
+    if (response.data.data && Array.isArray(response.data.data)) {
+      response.data.data = response.data.data.map((owner: any) => ({
+        ...owner,
+        id: owner._id || owner.id
+      }));
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching owners:', error);
+    throw error;
+  }
+};
+
 // Get owner profile by ID
 export const getOwnerProfile = async (ownerId: string): Promise<Owner> => {
   try {
     const response = await api.get(`/owners/${ownerId}`);
-    return response.data;
+    const owner = response.data.data || response.data;
+    // Ensure id field exists
+    if (owner && owner._id && !owner.id) {
+      owner.id = owner._id;
+    }
+    return owner;
   } catch (error) {
     console.error('Error fetching owner profile:', error);
     throw error;
@@ -65,11 +111,12 @@ export const getOwnerProfile = async (ownerId: string): Promise<Owner> => {
 // Get owner reviews
 export const getOwnerReviews = async (ownerId: string): Promise<Review[]> => {
   try {
-    const response = await api.get(`/ratings/owner/${ownerId}`);
-    return response.data.filter((review: Review) => review.status === 'approved');
+    const response = await api.get(`/owners/${ownerId}/reviews`);
+    return response.data.data || response.data || [];
   } catch (error) {
     console.error('Error fetching owner reviews:', error);
-    throw error;
+    // Return empty array on error to prevent crashes
+    return [];
   }
 };
 
@@ -80,12 +127,11 @@ export const submitOwnerReview = async (
   comment: string
 ): Promise<Review> => {
   try {
-    const response = await api.post('/ratings', {
-      owner: ownerId,
+    const response = await api.post(`/owners/${ownerId}/reviews`, {
       rating,
       comment,
     });
-    return response.data;
+    return response.data.data || response.data;
   } catch (error) {
     console.error('Error submitting review:', error);
     throw error;

@@ -1,0 +1,515 @@
+/* Calendar Share Links Component Styles */
+
+.calendar-share-links {
+  margin: 16px 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.calendar-share-links:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.share-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.share-links-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.025em;
+}
+
+.share-link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.share-link-item:hover {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.share-link-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.calendar-icon {
+  width: 24px;
+  height: 24px;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.outlook-icon {
+  color: #0078d4;
+}
+
+.google-icon {
+  color: #ea4335;
+}
+
+.share-link-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.share-link-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  line-height: 1.25;
+}
+
+.share-link-url {
+  font-size: 12px;
+  color: #6b7280;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.share-link-url:hover {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.share-link-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.share-link-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.subscribe-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  min-width: 80px;
+}
+
+.subscribe-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.subscribe-button:active {
+  transform: translateY(0);
+}
+
+.copy-button {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  padding: 8px;
+  min-width: 36px;
+  height: 36px;
+}
+
+.copy-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #374151;
+  transform: translateY(-1px);
+}
+
+.copy-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.copied-tooltip {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: tooltip-fade-in 0.2s ease;
+  z-index: 10;
+}
+
+.copied-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #111827;
+}
+
+@keyframes tooltip-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Compact version styles */
+.calendar-share-compact {
+  position: relative;
+  display: inline-block;
+}
+
+.share-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-toggle-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.share-toggle-button:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
+  ring-opacity: 0.5;
+}
+
+.share-icon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+}
+
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.share-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  min-width: 240px;
+  z-index: 1000;
+  overflow: hidden;
+  animation: dropdown-slide-in 0.2s ease;
+}
+
+@keyframes dropdown-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.share-option {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.share-option:last-child {
+  border-bottom: none;
+}
+
+.share-option-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.share-option-button:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+.option-icon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+}
+
+.copy-btn {
+  padding: 12px;
+  background: none;
+  border: none;
+  border-left: 1px solid #f3f4f6;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+}
+
+.copy-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .calendar-share-links {
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 10px;
+  }
+
+  .share-link-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .share-link-content {
+    width: 100%;
+  }
+
+  .share-link-url {
+    max-width: 100%;
+  }
+
+  .share-link-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .subscribe-button {
+    flex: 1;
+    margin-right: 8px;
+  }
+
+  .share-dropdown {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 320px;
+    top: auto;
+    bottom: 20px;
+    animation: dropdown-slide-up 0.3s ease;
+  }
+
+  @keyframes dropdown-slide-up {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .share-links-title {
+    font-size: 15px;
+  }
+
+  .share-link-label {
+    font-size: 13px;
+  }
+
+  .share-link-button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .copy-button {
+    min-width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+
+  .share-toggle-button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .share-option-button {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .calendar-share-links {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .share-links-title {
+    color: #f9fafb;
+  }
+
+  .share-link-item {
+    background: #111827;
+    border-color: #374151;
+  }
+
+  .share-link-item:hover {
+    background: #1f2937;
+    border-color: #4b5563;
+  }
+
+  .share-link-label {
+    color: #f3f4f6;
+  }
+
+  .share-link-url {
+    color: #9ca3af;
+  }
+
+  .copy-button {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+  }
+
+  .copy-button:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+
+  .share-toggle-button {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+  }
+
+  .share-toggle-button:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+
+  .share-dropdown {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .share-option {
+    border-color: #374151;
+  }
+
+  .share-option-button {
+    color: #f3f4f6;
+  }
+
+  .share-option-button:hover {
+    background: #374151;
+  }
+
+  .copy-btn {
+    border-color: #374151;
+    color: #9ca3af;
+  }
+
+  .copy-btn:hover {
+    background: #374151;
+    color: #f3f4f6;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .calendar-share-links {
+    border-width: 2px;
+  }
+
+  .share-link-item {
+    border-width: 2px;
+  }
+
+  .subscribe-button {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .copy-button {
+    border-width: 2px;
+  }
+}
