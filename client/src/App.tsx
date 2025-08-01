@@ -61,6 +61,7 @@ function App() {
               <Route path="forum" element={<Forum />} />
               <Route path="forum/thread/:id" element={<ForumThread />} />
               <Route path="library" element={<Library />} />
+              <Route path="library/*" element={<Library />} />
               <Route path="resources" element={<Resources />} />
               <Route path="owners" element={<OwnersRoster />} />
               <Route path="owners/:id" element={<OwnerProfile />} />

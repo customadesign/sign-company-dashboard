@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import {
   FolderIcon,
   DocumentIcon,
@@ -13,16 +14,71 @@ import {
   Squares2X2Icon,
   ChevronRightIcon,
   ClockIcon,
+  HomeIcon,
+  ChevronLeftIcon,
 } from '@heroicons/react/24/outline';
 import { FolderIcon as FolderSolidIcon } from '@heroicons/react/24/solid';
 
-// Mock data for file library
-const folders = [
-  { id: 1, name: 'Marketing Materials', items: 45, lastModified: '2024-01-15', size: '2.4 GB' },
-  { id: 2, name: 'Training Videos', items: 23, lastModified: '2024-01-10', size: '15.8 GB' },
-  { id: 3, name: 'Legal Documents', items: 67, lastModified: '2024-01-12', size: '890 MB' },
-  { id: 4, name: 'Event Photos', items: 342, lastModified: '2024-01-08', size: '5.2 GB' },
-];
+// Type definitions for file library
+interface FileItem {
+  id: number;
+  name: string;
+  type: 'folder' | 'file';
+  fileType?: string;
+  size?: string;
+  modified?: string;
+  items?: number;
+  lastModified?: string;
+  parentId?: number;
+}
+
+interface FolderStructure {
+  [key: string]: FileItem[];
+}
+
+const folderStructure: FolderStructure = {
+  root: [
+    { id: 1, name: 'Marketing Materials', type: 'folder', items: 45, lastModified: '2024-01-15', size: '2.4 GB' },
+    { id: 2, name: 'Training Videos', type: 'folder', items: 23, lastModified: '2024-01-10', size: '15.8 GB' },
+    { id: 3, name: 'Legal Documents', type: 'folder', items: 67, lastModified: '2024-01-12', size: '890 MB' },
+    { id: 4, name: 'Event Photos', type: 'folder', items: 342, lastModified: '2024-01-08', size: '5.2 GB' },
+  ],
+  '1': [
+    { id: 101, name: 'Brand Guidelines V3.pdf', type: 'file', fileType: 'pdf', size: '12.3 MB', modified: '1 day ago', parentId: 1 },
+    { id: 102, name: 'Q1 Marketing Strategy.pdf', type: 'file', fileType: 'pdf', size: '2.4 MB', modified: '2 hours ago', parentId: 1 },
+    { id: 103, name: 'Social Media Templates', type: 'folder', items: 15, lastModified: '2024-01-14', size: '156 MB', parentId: 1 },
+    { id: 104, name: 'Product Photos', type: 'folder', items: 28, lastModified: '2024-01-13', size: '1.8 GB', parentId: 1 },
+  ],
+  '2': [
+    { id: 201, name: 'Installation Guide 2024.mp4', type: 'file', fileType: 'video', size: '450 MB', modified: '5 hours ago', parentId: 2 },
+    { id: 202, name: 'Safety Procedures.mp4', type: 'file', fileType: 'video', size: '320 MB', modified: '1 day ago', parentId: 2 },
+    { id: 203, name: 'Basic Training', type: 'folder', items: 8, lastModified: '2024-01-09', size: '5.2 GB', parentId: 2 },
+    { id: 204, name: 'Advanced Training', type: 'folder', items: 12, lastModified: '2024-01-08', size: '8.6 GB', parentId: 2 },
+  ],
+  '3': [
+    { id: 301, name: 'Territory Agreement Template.docx', type: 'file', fileType: 'doc', size: '156 KB', modified: '3 days ago', parentId: 3 },
+    { id: 302, name: 'Franchise Agreements', type: 'folder', items: 23, lastModified: '2024-01-11', size: '234 MB', parentId: 3 },
+    { id: 303, name: 'Vendor Contracts', type: 'folder', items: 18, lastModified: '2024-01-10', size: '189 MB', parentId: 3 },
+    { id: 304, name: 'Insurance Documents', type: 'folder', items: 26, lastModified: '2024-01-09', size: '467 MB', parentId: 3 },
+  ],
+  '4': [
+    { id: 401, name: 'Convention Highlights 2023.mp4', type: 'file', fileType: 'video', size: '245 MB', modified: '2 days ago', parentId: 4 },
+    { id: 402, name: '2023 Convention', type: 'folder', items: 156, lastModified: '2024-01-07', size: '2.1 GB', parentId: 4 },
+    { id: 403, name: '2022 Convention', type: 'folder', items: 134, lastModified: '2023-08-15', size: '1.8 GB', parentId: 4 },
+    { id: 404, name: 'Team Building Events', type: 'folder', items: 52, lastModified: '2024-01-06', size: '1.3 GB', parentId: 4 },
+  ],
+  // Nested folders
+  '103': [
+    { id: 1031, name: 'Instagram Templates.psd', type: 'file', fileType: 'image', size: '45 MB', modified: '2 days ago', parentId: 103 },
+    { id: 1032, name: 'Facebook Cover.psd', type: 'file', fileType: 'image', size: '38 MB', modified: '3 days ago', parentId: 103 },
+    { id: 1033, name: 'Twitter Headers.psd', type: 'file', fileType: 'image', size: '28 MB', modified: '4 days ago', parentId: 103 },
+  ],
+  '203': [
+    { id: 2031, name: 'Module 1 - Getting Started.mp4', type: 'file', fileType: 'video', size: '680 MB', modified: '1 week ago', parentId: 203 },
+    { id: 2032, name: 'Module 2 - Basic Operations.mp4', type: 'file', fileType: 'video', size: '720 MB', modified: '1 week ago', parentId: 203 },
+    { id: 2033, name: 'Module 3 - Safety First.mp4', type: 'file', fileType: 'video', size: '550 MB', modified: '1 week ago', parentId: 203 },
+  ],
+};
 
 const recentFiles = [
   { id: 1, name: 'Q1_Marketing_Strategy.pdf', type: 'pdf', size: '2.4 MB', modified: '2 hours ago', folder: 'Marketing Materials' },
@@ -39,10 +95,90 @@ const fileTypeStats = [
   { type: 'Other', count: 121, icon: DocumentIcon, color: 'text-gray-600', bg: 'bg-gray-100' },
 ];
 
+interface BreadcrumbItem {
+  id: string;
+  name: string;
+  path: string;
+}
+
 const Library = () => {
   console.log('Library component is rendering');
+  const navigate = useNavigate();
+  const location = useLocation();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPath, setCurrentPath] = useState<string[]>(['root']);
+  const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
+  const [currentItems, setCurrentItems] = useState<FileItem[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Extract folder path from URL
+  useEffect(() => {
+    const pathParts = location.pathname.split('/').filter(part => part && part !== 'library');
+    if (pathParts.length > 0) {
+      setCurrentPath(['root', ...pathParts]);
+    } else {
+      setCurrentPath(['root']);
+    }
+  }, [location.pathname]);
+
+  // Update current items based on path
+  useEffect(() => {
+    const folderId = currentPath[currentPath.length - 1];
+    const items = folderStructure[folderId] || folderStructure['root'];
+    setCurrentItems(items);
+    updateBreadcrumbs();
+  }, [currentPath]);
+
+  const updateBreadcrumbs = () => {
+    const crumbs: BreadcrumbItem[] = [{ id: 'root', name: 'Home', path: '/library' }];
+    
+    // Build breadcrumbs from path
+    let pathStr = '/library';
+    for (let i = 1; i < currentPath.length; i++) {
+      const folderId = currentPath[i];
+      const parentItems = folderStructure[currentPath[i - 1]] || [];
+      const folder = parentItems.find(item => item.id.toString() === folderId);
+      
+      if (folder && folder.type === 'folder') {
+        pathStr += `/${folderId}`;
+        crumbs.push({ id: folderId, name: folder.name, path: pathStr });
+      }
+    }
+    
+    setBreadcrumbs(crumbs);
+  };
+
+  const navigateToFolder = (folderId: number) => {
+    setIsNavigating(true);
+    const newPath = `/library/${folderId}`;
+    navigate(newPath);
+    setTimeout(() => setIsNavigating(false), 300);
+  };
+
+  const navigateToBreadcrumb = (path: string) => {
+    setIsNavigating(true);
+    navigate(path);
+    setTimeout(() => setIsNavigating(false), 300);
+  };
+
+  const goBack = () => {
+    if (currentPath.length > 1) {
+      setIsNavigating(true);
+      const newPath = currentPath.slice(0, -1);
+      const pathStr = newPath.length === 1 ? '/library' : `/library/${newPath.slice(1).join('/')}`;
+      navigate(pathStr);
+      setTimeout(() => setIsNavigating(false), 300);
+    }
+  };
+
+  // Filter items based on search
+  const filteredItems = currentItems.filter(item => 
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const folders = filteredItems.filter(item => item.type === 'folder');
+  const files = filteredItems.filter(item => item.type === 'file');
 
   const getFileIcon = (type: string) => {
     switch (type) {
@@ -83,6 +219,41 @@ const Library = () => {
           </div>
         </div>
       </div>
+
+      {/* Breadcrumb Navigation */}
+      {breadcrumbs.length > 0 && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 px-6 py-4">
+          <div className="flex items-center space-x-2">
+            {currentPath.length > 1 && (
+              <button
+                onClick={goBack}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 mr-2"
+                title="Go back"
+              >
+                <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
+              </button>
+            )}
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={crumb.id}>
+                <button
+                  onClick={() => navigateToBreadcrumb(crumb.path)}
+                  className={`inline-flex items-center px-3 py-1 rounded-md transition-all duration-200 ${
+                    index === breadcrumbs.length - 1
+                      ? 'bg-primary-100 text-primary-700 font-medium'
+                      : 'text-gray-600 hover:text-primary-600 hover:bg-gray-100'
+                  }`}
+                >
+                  {index === 0 && <HomeIcon className="h-4 w-4 mr-1" />}
+                  {crumb.name}
+                </button>
+                {index < breadcrumbs.length - 1 && (
+                  <ChevronRightIcon className="h-4 w-4 text-gray-400" />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* File Type Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -149,16 +320,22 @@ const Library = () => {
               </h3>
             </div>
             <div className="p-6">
-              {viewMode === 'grid' ? (
+              {folders.length === 0 && currentPath.length > 1 ? (
+                <p className="text-gray-500 text-center py-8">No folders in this directory</p>
+              ) : viewMode === 'grid' ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {folders.map((folder) => (
                     <div
                       key={folder.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 hover:shadow-md transition-all duration-200 cursor-pointer group"
+                      onClick={() => navigateToFolder(folder.id)}
+                      className={`border border-gray-200 rounded-lg p-4 hover:border-primary-300 hover:shadow-md transition-all duration-200 cursor-pointer group relative overflow-hidden ${
+                        isNavigating ? 'opacity-50' : ''
+                      }`}
                     >
-                      <div className="flex items-start justify-between">
+                      <div className="absolute inset-0 bg-primary-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="flex items-start justify-between relative z-10">
                         <div className="flex items-center">
-                          <FolderIcon className="h-10 w-10 text-primary-600 group-hover:text-primary-700" />
+                          <FolderIcon className="h-10 w-10 text-primary-600 group-hover:text-primary-700 transition-colors duration-200" />
                           <div className="ml-3">
                             <h4 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-primary-600 line-clamp-2">
                               {folder.name}
@@ -166,9 +343,9 @@ const Library = () => {
                             <p className="text-xs text-gray-500">{folder.items} items</p>
                           </div>
                         </div>
-                        <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-primary-600" />
+                        <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-primary-600 transition-all duration-200 group-hover:translate-x-1" />
                       </div>
-                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 relative z-10">
                         <span>{folder.size}</span>
                         <span>{folder.lastModified}</span>
                       </div>
@@ -180,10 +357,14 @@ const Library = () => {
                   {folders.map((folder) => (
                     <div
                       key={folder.id}
-                      className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg cursor-pointer group"
+                      onClick={() => navigateToFolder(folder.id)}
+                      className={`flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg cursor-pointer group relative overflow-hidden ${
+                        isNavigating ? 'opacity-50' : ''
+                      }`}
                     >
-                      <div className="flex items-center flex-1">
-                        <FolderIcon className="h-8 w-8 text-primary-600" />
+                      <div className="absolute inset-0 bg-primary-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="flex items-center flex-1 relative z-10">
+                        <FolderIcon className="h-8 w-8 text-primary-600 group-hover:text-primary-700 transition-colors duration-200" />
                         <div className="ml-3 flex-1">
                           <h4 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-primary-600 line-clamp-2">
                             {folder.name}
@@ -197,7 +378,7 @@ const Library = () => {
                           </div>
                         </div>
                       </div>
-                      <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-primary-600" />
+                      <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-primary-600 transition-all duration-200 group-hover:translate-x-1 relative z-10" />
                     </div>
                   ))}
                 </div>
@@ -206,18 +387,32 @@ const Library = () => {
           </div>
         </div>
 
-        {/* Recent Files Section */}
+        {/* Files Section / Recent Files */}
         <div className="space-y-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="px-6 py-4 border-b border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                <ClockIcon className="h-5 w-5 mr-2 text-primary-600" />
-                Recent Files
+                {currentPath.length > 1 ? (
+                  <>
+                    <DocumentIcon className="h-5 w-5 mr-2 text-primary-600" />
+                    Files in this folder
+                  </>
+                ) : (
+                  <>
+                    <ClockIcon className="h-5 w-5 mr-2 text-primary-600" />
+                    Recent Files
+                  </>
+                )}
               </h3>
             </div>
             <div className="p-6">
+              {(currentPath.length > 1 ? files : recentFiles).length === 0 ? (
+                <p className="text-gray-500 text-center py-8">
+                  {currentPath.length > 1 ? 'No files in this folder' : 'No recent files'}
+                </p>
+              ) : (
               <div className="space-y-3">
-                {recentFiles.map((file) => (
+                {(currentPath.length > 1 ? files : recentFiles).map((file) => (
                   <div
                     key={file.id}
                     className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg cursor-pointer group"
@@ -242,6 +437,7 @@ const Library = () => {
                   </div>
                 ))}
               </div>
+              )}
               <button className="mt-4 w-full text-sm text-primary-600 hover:text-primary-700 font-medium">
                 View all recent files →
               </button>
