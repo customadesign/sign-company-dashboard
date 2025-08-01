@@ -22,7 +22,7 @@ const mockOwnerData = {
   email: 'john.smith@signcompany.com',
   phone: '(555) 123-4567',
   company: 'Smith Signs & Graphics',
-  profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg',
+  profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
   address: {
     street: '123 Main Street',
     city: 'Dallas',
@@ -70,7 +70,7 @@ const mockReviews = [
     reviewer: {
       name: 'Sarah Johnson',
       company: 'Johnson Creative Signs',
-      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 5,
     comment: 'John has been an incredible mentor. His expertise in channel letters helped us streamline our production process and increase efficiency by 30%.',
@@ -81,7 +81,7 @@ const mockReviews = [
     reviewer: {
       name: 'Michael Chen',
       company: 'Chen Signs & Graphics',
-      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 4,
     comment: 'Great experience working with John on a collaborative project. Very professional and knowledgeable about the industry.',
@@ -92,7 +92,7 @@ const mockReviews = [
     reviewer: {
       name: 'Emily Rodriguez',
       company: 'Bright Signs Co.',
-      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 5,
     comment: 'John\'s equipment recommendations were spot on. Saved us thousands on our new printer purchase. Highly recommend reaching out to him!',
