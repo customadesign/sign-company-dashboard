@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Post/pole -->
+  <rect x="14" y="8" width="4" height="24" fill="#4b5563" rx="0.5"/>
+  
+  <!-- Street sign shape (octagonal-ish) -->
+  <g>
+    <!-- Shadow -->
+    <path d="M 6 12 L 26 12 L 30 16 L 26 20 L 6 20 L 2 16 Z" fill="#00000020" transform="translate(0, 1)"/>
+    
+    <!-- Main sign -->
+    <path d="M 6 12 L 26 12 L 30 16 L 26 20 L 6 20 L 2 16 Z" fill="#dc2626" stroke="#991b1b" stroke-width="1"/>
+    
+    <!-- Text -->
+    <text x="16" y="18.5" font-family="Arial, sans-serif" font-size="6" font-weight="bold" text-anchor="middle" fill="white">SIGN</text>
+  </g>
+  
+  <!-- Bolts on pole -->
+  <circle cx="16" cy="14" r="0.8" fill="#9ca3af"/>
+  <circle cx="16" cy="18" r="0.8" fill="#9ca3af"/>
+</svg>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Preview - Sign Company</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem;
+            background-color: #f3f4f6;
+            line-height: 1.6;
+        }
+        .preview-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1e40af;
+            margin-bottom: 2rem;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .icon-preview {
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .icon-preview img {
+            margin-bottom: 1rem;
+            display: inline-block;
+            border: 1px solid #d1d5db;
+            background: white;
+            padding: 4px;
+        }
+        .icon-preview h3 {
+            margin: 0 0 0.5rem 0;
+            color: #374151;
+            font-size: 1rem;
+        }
+        .icon-preview p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        .browser-preview {
+            margin-top: 3rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .browser-tab {
+            background: #e5e7eb;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .browser-tab img {
+            width: 16px;
+            height: 16px;
+        }
+        .browser-content {
+            background: white;
+            padding: 2rem;
+            min-height: 200px;
+        }
+        .design-notes {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .design-notes h2 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        .design-notes ul {
+            margin: 0;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1>Sign Company Favicon Preview</h1>
+        
+        <div class="icon-grid">
+            <div class="icon-preview">
+                <img src="/favicon.svg" width="32" height="32" alt="Main favicon">
+                <h3>Main Favicon (32x32)</h3>
+                <p>Primary icon with hanging sign design</p>
+            </div>
+            
+            <div class="icon-preview">
+                <img src="/favicon-16x16.svg" width="16" height="16" alt="Small favicon">
+                <h3>Small Favicon (16x16)</h3>
+                <p>Simplified for browser tabs</p>
+            </div>
+            
+            <div class="icon-preview">
+                <img src="/apple-touch-icon.svg" width="60" height="60" alt="Apple touch icon">
+                <h3>Apple Touch Icon</h3>
+                <p>High-res for mobile devices</p>
+            </div>
+            
+            <div class="icon-preview">
+                <img src="/favicon-alt-street-sign.svg" width="32" height="32" alt="Alternative street sign">
+                <h3>Alternative Design</h3>
+                <p>Street sign style variant</p>
+            </div>
+        </div>
+        
+        <div class="browser-preview">
+            <div class="browser-tab">
+                <img src="/favicon-16x16.svg" alt="Favicon in tab">
+                <span>Sign Company Dashboard</span>
+            </div>
+            <div class="browser-content">
+                <h2>How it looks in a browser tab</h2>
+                <p>The favicon appears next to the page title in browser tabs, bookmarks, and history.</p>
+            </div>
+        </div>
+        
+        <div class="design-notes">
+            <h2>Design Features</h2>
+            <ul>
+                <li><strong>Hanging Sign Design:</strong> Immediately recognizable as a physical sign, with a bracket and hanging element</li>
+                <li><strong>Color Scheme:</strong> Uses blue (#1e40af) matching modern web aesthetics, with good contrast for visibility</li>
+                <li><strong>Scalability:</strong> Works well from 16x16 pixels up to 180x180 pixels</li>
+                <li><strong>Visual Elements:</strong> Includes decorative bolts and borders that add depth without cluttering at small sizes</li>
+                <li><strong>Text:</strong> "SIGN" text is readable even at small sizes, "SIGN CO." for larger versions</li>
+                <li><strong>Browser Compatibility:</strong> SVG format with fallback options for older browsers</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
