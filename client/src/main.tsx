@@ -4,7 +4,8 @@ import './index.css'
 import App from './App.tsx'
 // import App from './test-app.tsx'
 
-console.log('Main.tsx loading - v2');
+console.log('Sign Company Dashboard - Production Build v3');
+console.log('Build time:', new Date().toISOString());
 const rootElement = document.getElementById('root');
 console.log('Root element:', rootElement);
 
