@@ -62,4 +62,13 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Custom light theme colors for calendar */
+  .bg-gray-25 {
+    background-color: #fcfcfd;
+  }
+  
+  .bg-primary-25 {
+    background-color: #f0f9ff;
+  }
 }

@@ -109,7 +109,7 @@ const Calendar = () => {
             <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign Company events</p>
           </div>
           <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-            <button className="inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            <button className="inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 hover:border-primary-700 hover:text-primary-700 transition-all duration-200 shadow-sm hover:shadow-md">
               <CalendarDaysIcon className="h-5 w-5 mr-2" />
               Add Event
             </button>
@@ -155,19 +155,19 @@ const Calendar = () => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:shadow-sm"
                 >
                   <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => setCurrentMonth(new Date())}
-                  className="px-3 py-1.5 text-sm font-medium text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                  className="px-3 py-1.5 text-sm font-medium text-primary-600 hover:bg-primary-50 hover:text-primary-700 rounded-lg transition-all duration-200 border border-transparent hover:border-primary-200 shadow-sm hover:shadow-md"
                 >
                   Today
                 </button>
                 <button
                   onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:shadow-sm"
                 >
                   <ChevronRightIcon className="h-5 w-5 text-gray-600" />
                 </button>
@@ -244,7 +244,7 @@ const Calendar = () => {
                 <div
                   key={event.id}
                   onClick={() => setSelectedEvent(event)}
-                  className="p-4 rounded-lg border border-gray-200 hover:border-primary-300 hover:shadow-sm transition-all cursor-pointer"
+                  className="p-4 rounded-lg border border-gray-200 hover:border-primary-300 hover:shadow-md hover:bg-primary-25 transition-all duration-200 cursor-pointer"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -344,10 +344,10 @@ const Calendar = () => {
                 {selectedEvent.type}
               </span>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                <button className="px-4 py-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors text-center">
+                <button className="px-4 py-2 text-primary-600 hover:bg-primary-50 hover:text-primary-700 rounded-lg transition-all duration-200 border border-transparent hover:border-primary-200 text-center">
                   Edit
                 </button>
-                <button className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-center">
+                <button className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 hover:shadow-md transition-all duration-200 text-center">
                   Join Event
                 </button>
               </div>

@@ -17,6 +17,7 @@ import {
   BookOpenIcon,
   ChartBarIcon,
   BellIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import AISearchBox from './AISearchBox';
@@ -134,6 +135,14 @@ const Layout = () => {
                   </div>
                   {user && (
                     <div className="py-1">
+                      <Link
+                        to="/profile"
+                        className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        <UserIcon className="mr-3 h-5 w-5 text-gray-400" />
+                        Profile Settings
+                      </Link>
                       <button
                         onClick={logout}
                         className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -220,13 +229,23 @@ const Layout = () => {
                       <p className="text-xs text-gray-500">{user?.email || 'Not logged in'}</p>
                     </div>
                     {user && (
-                      <button
-                        onClick={logout}
-                        className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        <ArrowRightOnRectangleIcon className="mr-3 h-4 w-4 text-gray-400" />
-                        Sign out
-                      </button>
+                      <div className="py-1">
+                        <Link
+                          to="/profile"
+                          className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          onClick={() => setUserMenuOpen(false)}
+                        >
+                          <UserIcon className="mr-3 h-4 w-4 text-gray-400" />
+                          Profile Settings
+                        </Link>
+                        <button
+                          onClick={logout}
+                          className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <ArrowRightOnRectangleIcon className="mr-3 h-4 w-4 text-gray-400" />
+                          Sign out
+                        </button>
+                      </div>
                     )}
                   </div>
                 )}
