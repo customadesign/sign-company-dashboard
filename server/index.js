@@ -87,7 +87,13 @@ if (process.env.NODE_ENV === 'production') {
   
   app.use(express.static(staticPath));
   
-  app.get('*', (req, res) => {
+  // Only serve index.html for non-API routes
+  app.get('*', (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return next();
+    }
+    
     const indexPath = path.join(__dirname, '../client/dist/index.html');
     console.log('Serving index.html from:', indexPath);
     res.sendFile(indexPath);

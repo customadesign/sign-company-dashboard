@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000/api';
+const API_URL = import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV 
+    ? 'http://localhost:9000/api' 
+    : 'https://sign-company.onrender.com/api');
 
 // Create axios instance with base configuration
 const calendarAPI = axios.create({
@@ -76,14 +79,25 @@ export interface APIResponse<T> {
 
 // Calendar service functions
 export const calendarService = {
-  // Get all events
+  // Get all public events (no authentication required)
   getEvents: async (): Promise<CalendarEvent[]> => {
     try {
-      const response = await calendarAPI.get<APIResponse<CalendarEvent[]>>('/');
+      const response = await calendarAPI.get<APIResponse<CalendarEvent[]>>('/public');
       return response.data.data;
     } catch (error) {
       console.error('Error fetching events:', error);
       throw new Error('Failed to fetch events');
+    }
+  },
+
+  // Get all events (requires authentication for admin/management)
+  getAllEvents: async (): Promise<CalendarEvent[]> => {
+    try {
+      const response = await calendarAPI.get<APIResponse<CalendarEvent[]>>('/');
+      return response.data.data;
+    } catch (error) {
+      console.error('Error fetching all events:', error);
+      throw new Error('Failed to fetch all events');
     }
   },
 

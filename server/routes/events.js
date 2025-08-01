@@ -4,7 +4,28 @@ const Event = require('../models/Event');
 const ical = require('ical-generator');
 const { protect } = require('../middleware/auth');
 
-// Get all events (protected route)
+// Get all published events (public route for calendar display)
+router.get('/public', async (req, res) => {
+  try {
+    const events = await Event.find({ isPublished: true })
+      .populate('organizer', 'name email')
+      .sort({ startDate: 1 });
+    
+    res.json({
+      success: true,
+      count: events.length,
+      data: events
+    });
+  } catch (error) {
+    console.error('Error fetching public events:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error while fetching events'
+    });
+  }
+});
+
+// Get all events (protected route for admin/management)
 router.get('/', protect, async (req, res) => {
   try {
     const events = await Event.find({ isPublished: true })
