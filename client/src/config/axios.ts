@@ -7,7 +7,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ||
   injectedApiUrl ||
   (import.meta.env.DEV 
     ? 'http://localhost:5000' 
-    : 'https://sign-company.onrender.com');
+    : window.location.origin);
 
 // Log the API URL for debugging
 console.log('🔗 API Configuration:', {
