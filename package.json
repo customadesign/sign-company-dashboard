@@ -15,6 +15,8 @@
     "deploy:github": "./scripts/deploy-to-github.sh",
     "seed:events": "node server/seedEvents.js",
     "seed:admin": "node server/seedAdmin.js",
+    "seed:owners": "node server/seedOwners.js",
+    "seed:production-owners": "node server/seedProductionOwners.js",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [

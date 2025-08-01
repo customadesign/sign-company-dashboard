@@ -86,9 +86,18 @@ export const getOwners = async (params?: {
       }));
     }
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching owners:', error);
-    throw error;
+    // Provide a more descriptive error message
+    if (error.response?.status === 404) {
+      throw new Error('Owners endpoint not found. Please check the server configuration.');
+    } else if (error.response?.status === 500) {
+      throw new Error('Server error while fetching owners. Please try again later.');
+    } else if (error.code === 'ERR_NETWORK') {
+      throw new Error('Network error. Please check your internet connection.');
+    } else {
+      throw new Error(error.response?.data?.error || 'Failed to fetch owners. Please try again.');
+    }
   }
 };
 

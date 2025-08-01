@@ -388,7 +388,29 @@ const OwnersRoster = () => {
       </div>
 
       {/* Owners Grid/List */}
-      {viewMode === 'grid' ? (
+      {owners.length === 0 && !isLoading ? (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+          <UserGroupIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">No Owners Found</h3>
+          <p className="text-gray-600 max-w-md mx-auto mb-6">
+            {searchQuery || selectedSpecialties.length > 0 
+              ? "No owners match your search criteria. Try adjusting your filters."
+              : "The owner roster is currently empty. New owners will appear here once they're added to the system."}
+          </p>
+          {(searchQuery || selectedSpecialties.length > 0) && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedSpecialties([]);
+                setSelectedTerritory('All Territories');
+              }}
+              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200"
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      ) : viewMode === 'grid' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {owners.map((owner) => (
             <Link
