@@ -24,5 +24,8 @@ export default defineConfig({
       }
     }
   },
-  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg']
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg'],
+  optimizeDeps: {
+    include: ['leaflet']
+  }
 })

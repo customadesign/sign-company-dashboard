@@ -2,22 +2,22 @@ import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
-// Import leaflet CSS - for Vite/TypeScript compatibility
+// Import leaflet CSS
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers in React-Leaflet - use require for better compatibility
-const iconUrl = require('leaflet/dist/images/marker-icon.png');
-const iconRetinaUrl = require('leaflet/dist/images/marker-icon-2x.png');
-const shadowUrl = require('leaflet/dist/images/marker-shadow.png');
+// Import marker images for Vite
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 // Delete default icon settings
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 // Set new default icon options
 L.Icon.Default.mergeOptions({
-  iconUrl: iconUrl,
-  iconRetinaUrl: iconRetinaUrl,
-  shadowUrl: shadowUrl,
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
 });
 
 interface Location {
