@@ -3439,3 +3439,115 @@
 [0] [32m[nodemon] starting `node server/index.js`[39m
 [0] Server running on port 9000
 [0] MongoDB Connected: ac-z4jdl5y-shard-00-00.5kcfjqh.mongodb.net
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] Server running on port 9000
+[0] MongoDB Connected: ac-z4jdl5y-shard-00-02.5kcfjqh.mongodb.net
+[1] 11:01:02 AM [vite] vite.config.ts changed, restarting server...
+[1] 11:01:02 AM [vite] (client) Re-optimizing dependencies because lockfile has changed
+[1] 11:01:02 AM [vite] server restarted.
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] node:events:485
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::9000
+[0]     at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+[0]     at listenInCluster (node:net:1997:12)
+[0]     at Server.listen (node:net:2102:7)
+[0]     at app.listen (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/server/index.js:72:5)
+[0]     at Module._compile (node:internal/modules/cjs/loader:1692:14)
+[0]     at Object..js (node:internal/modules/cjs/loader:1824:10)
+[0]     at Module.load (node:internal/modules/cjs/loader:1427:32)
+[0]     at Module._load (node:internal/modules/cjs/loader:1250:12)
+[0]     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (node:net:1976:8)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -48,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 9000
+[0] }
+[0] 
+[0] Node.js v24.4.1
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] Server running on port 9000
+[0] MongoDB Connected: ac-z4jdl5y-shard-00-00.5kcfjqh.mongodb.net
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] node:events:485
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::9000
+[0]     at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+[0]     at listenInCluster (node:net:1997:12)
+[0]     at Server.listen (node:net:2102:7)
+[0]     at app.listen (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/server/index.js:72:5)
+[0]     at Module._compile (node:internal/modules/cjs/loader:1692:14)
+[0]     at Object..js (node:internal/modules/cjs/loader:1824:10)
+[0]     at Module.load (node:internal/modules/cjs/loader:1427:32)
+[0]     at Module._load (node:internal/modules/cjs/loader:1250:12)
+[0]     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (node:net:1976:8)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -48,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 9000
+[0] }
+[0] 
+[0] Node.js v24.4.1
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] Server running on port 9000
+[0] MongoDB Connected: ac-z4jdl5y-shard-00-01.5kcfjqh.mongodb.net
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] node:events:485
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::9000
+[0]     at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+[0]     at listenInCluster (node:net:1997:12)
+[0]     at Server.listen (node:net:2102:7)
+[0]     at app.listen (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/server/index.js:72:5)
+[0]     at Module._compile (node:internal/modules/cjs/loader:1692:14)
+[0]     at Object..js (node:internal/modules/cjs/loader:1824:10)
+[0]     at Module.load (node:internal/modules/cjs/loader:1427:32)
+[0]     at Module._load (node:internal/modules/cjs/loader:1250:12)
+[0]     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (node:net:1976:8)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -48,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 9000
+[0] }
+[0] 
+[0] Node.js v24.4.1
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
