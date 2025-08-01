@@ -25,6 +25,136 @@ router.get('/public', async (req, res) => {
   }
 });
 
+// Development/admin endpoint to seed sample events (must come BEFORE /:id route)
+router.get('/seed', async (req, res) => {
+  try {
+    // Allow seeding in development or with special query parameter for initial setup
+    if (process.env.NODE_ENV === 'production' && req.query.setup !== 'initial') {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied - use ?setup=initial for first-time setup'
+      });
+    }
+
+    // Find or create an admin user to be the organizer
+    const User = require('../models/User');
+    let organizer = await User.findOne({ role: 'admin' });
+    
+    if (!organizer) {
+      console.log('No admin user found. Creating a default organizer...');
+      const bcrypt = require('bcryptjs');
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('admin123', salt);
+      
+      organizer = await User.create({
+        name: 'System Admin',
+        email: 'admin@signcompany.com',
+        password: hashedPassword,
+        role: 'admin',
+        isVerified: true
+      });
+    }
+
+    // Clear existing events
+    await Event.deleteMany({});
+    console.log('Cleared existing events');
+
+    // Sample events data
+    const events = [
+      {
+        title: 'Monthly Owner Meeting',
+        description: 'Monthly meeting to discuss Q3 goals and performance metrics. Review sales figures, upcoming projects, and team updates.',
+        startDate: new Date('2025-08-15T14:00:00.000Z'),
+        endDate: new Date('2025-08-15T15:30:00.000Z'),
+        category: 'meeting',
+        color: '#00A6FB',
+        location: 'Virtual - Zoom',
+        isOnline: true,
+        onlineLink: 'https://zoom.us/j/123456789',
+        organizer: organizer._id,
+        isPublished: true
+      },
+      {
+        title: 'Sign Design Workshop',
+        description: 'Learn advanced techniques for creating eye-catching sign designs. Hands-on workshop with industry experts.',
+        startDate: new Date('2025-08-08T10:00:00.000Z'),
+        endDate: new Date('2025-08-08T12:00:00.000Z'),
+        category: 'training',
+        color: '#10B981',
+        location: 'Training Center - Room A',
+        isOnline: false,
+        organizer: organizer._id,
+        isPublished: true
+      },
+      {
+        title: 'Annual Convention 2025',
+        description: 'The biggest Sign Company event of the year! Network with industry professionals, learn about new trends, and celebrate our achievements.',
+        startDate: new Date('2025-08-22T09:00:00.000Z'),
+        endDate: new Date('2025-08-24T17:00:00.000Z'),
+        category: 'convention',
+        color: '#8B5CF6',
+        location: 'Las Vegas Convention Center',
+        isOnline: false,
+        organizer: organizer._id,
+        isPublished: true
+      },
+      {
+        title: 'Digital Marketing Webinar',
+        description: 'Discover effective strategies for growing your sign business with digital marketing. Topics include SEO, social media, and online advertising.',
+        startDate: new Date('2025-08-18T13:00:00.000Z'),
+        endDate: new Date('2025-08-18T14:00:00.000Z'),
+        category: 'webinar',
+        color: '#F59E0B',
+        location: 'Online',
+        isOnline: true,
+        onlineLink: 'https://teams.microsoft.com/l/meetup-join/12345',
+        organizer: organizer._id,
+        isPublished: true
+      },
+      {
+        title: 'Summer BBQ & Team Building',
+        description: 'Join us for our annual summer BBQ and team building activities. Great food, fun games, and time to connect with colleagues.',
+        startDate: new Date('2025-08-25T12:00:00.000Z'),
+        endDate: new Date('2025-08-25T16:00:00.000Z'),
+        category: 'social',
+        color: '#EC4899',
+        location: 'Company Headquarters - Outdoor Area',
+        isOnline: false,
+        organizer: organizer._id,
+        isPublished: true
+      },
+      {
+        title: 'Equipment Maintenance Training',
+        description: 'Essential training on proper maintenance and care of sign-making equipment. Preventive maintenance schedules and troubleshooting tips.',
+        startDate: new Date('2025-09-05T09:00:00.000Z'),
+        endDate: new Date('2025-09-05T11:00:00.000Z'),
+        category: 'training',
+        color: '#10B981',
+        location: 'Workshop Floor',
+        isOnline: false,
+        organizer: organizer._id,
+        isPublished: true
+      }
+    ];
+
+    // Create events
+    const createdEvents = await Event.create(events);
+    
+    res.json({
+      success: true,
+      message: `Created ${createdEvents.length} sample events`,
+      data: createdEvents
+    });
+  } catch (error) {
+    console.error('Error seeding events:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error seeding events',
+      error: error.message
+    });
+  }
+});
+
 // Get all events (protected route for admin/management)
 router.get('/', protect, async (req, res) => {
   try {
@@ -342,136 +472,6 @@ router.get('/calendar/info', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error fetching calendar information'
-    });
-  }
-});
-
-// Development/admin endpoint to seed sample events (remove in production)
-router.get('/seed', async (req, res) => {
-  try {
-    // Allow seeding in development or with special query parameter for initial setup
-    if (process.env.NODE_ENV === 'production' && req.query.setup !== 'initial') {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied - use ?setup=initial for first-time setup'
-      });
-    }
-
-    // Find or create an admin user to be the organizer
-    const User = require('../models/User');
-    let organizer = await User.findOne({ role: 'admin' });
-    
-    if (!organizer) {
-      console.log('No admin user found. Creating a default organizer...');
-      const bcrypt = require('bcryptjs');
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash('admin123', salt);
-      
-      organizer = await User.create({
-        name: 'System Admin',
-        email: 'admin@signcompany.com',
-        password: hashedPassword,
-        role: 'admin',
-        isVerified: true
-      });
-    }
-
-    // Clear existing events
-    await Event.deleteMany({});
-    console.log('Cleared existing events');
-
-    // Sample events data
-    const events = [
-      {
-        title: 'Monthly Owner Meeting',
-        description: 'Monthly meeting to discuss Q3 goals and performance metrics. Review sales figures, upcoming projects, and team updates.',
-        startDate: new Date('2025-08-15T14:00:00.000Z'),
-        endDate: new Date('2025-08-15T15:30:00.000Z'),
-        category: 'meeting',
-        color: '#00A6FB',
-        location: 'Virtual - Zoom',
-        isOnline: true,
-        onlineLink: 'https://zoom.us/j/123456789',
-        organizer: organizer._id,
-        isPublished: true
-      },
-      {
-        title: 'Sign Design Workshop',
-        description: 'Learn advanced techniques for creating eye-catching sign designs. Hands-on workshop with industry experts.',
-        startDate: new Date('2025-08-08T10:00:00.000Z'),
-        endDate: new Date('2025-08-08T12:00:00.000Z'),
-        category: 'training',
-        color: '#10B981',
-        location: 'Training Center - Room A',
-        isOnline: false,
-        organizer: organizer._id,
-        isPublished: true
-      },
-      {
-        title: 'Annual Convention 2025',
-        description: 'The biggest Sign Company event of the year! Network with industry professionals, learn about new trends, and celebrate our achievements.',
-        startDate: new Date('2025-08-22T09:00:00.000Z'),
-        endDate: new Date('2025-08-24T17:00:00.000Z'),
-        category: 'convention',
-        color: '#8B5CF6',
-        location: 'Las Vegas Convention Center',
-        isOnline: false,
-        organizer: organizer._id,
-        isPublished: true
-      },
-      {
-        title: 'Digital Marketing Webinar',
-        description: 'Discover effective strategies for growing your sign business with digital marketing. Topics include SEO, social media, and online advertising.',
-        startDate: new Date('2025-08-18T13:00:00.000Z'),
-        endDate: new Date('2025-08-18T14:00:00.000Z'),
-        category: 'webinar',
-        color: '#F59E0B',
-        location: 'Online',
-        isOnline: true,
-        onlineLink: 'https://teams.microsoft.com/l/meetup-join/12345',
-        organizer: organizer._id,
-        isPublished: true
-      },
-      {
-        title: 'Summer BBQ & Team Building',
-        description: 'Join us for our annual summer BBQ and team building activities. Great food, fun games, and time to connect with colleagues.',
-        startDate: new Date('2025-08-25T12:00:00.000Z'),
-        endDate: new Date('2025-08-25T16:00:00.000Z'),
-        category: 'social',
-        color: '#EC4899',
-        location: 'Company Headquarters - Outdoor Area',
-        isOnline: false,
-        organizer: organizer._id,
-        isPublished: true
-      },
-      {
-        title: 'Equipment Maintenance Training',
-        description: 'Essential training on proper maintenance and care of sign-making equipment. Preventive maintenance schedules and troubleshooting tips.',
-        startDate: new Date('2025-09-05T09:00:00.000Z'),
-        endDate: new Date('2025-09-05T11:00:00.000Z'),
-        category: 'training',
-        color: '#10B981',
-        location: 'Workshop Floor',
-        isOnline: false,
-        organizer: organizer._id,
-        isPublished: true
-      }
-    ];
-
-    // Create events
-    const createdEvents = await Event.create(events);
-    
-    res.json({
-      success: true,
-      message: `Created ${createdEvents.length} sample events`,
-      data: createdEvents
-    });
-  } catch (error) {
-    console.error('Error seeding events:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error seeding events',
-      error: error.message
     });
   }
 });
