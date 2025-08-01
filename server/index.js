@@ -55,6 +55,15 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Test endpoint to verify deployment
+app.get('/api/test', (req, res) => {
+  res.status(200).json({
+    message: 'API is working!',
+    timestamp: new Date().toISOString(),
+    version: '2.0.0'
+  });
+});
+
 // Serve static assets in production BEFORE API routes to avoid conflicts
 if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, '../client/dist');
