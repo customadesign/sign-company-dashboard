@@ -22,7 +22,7 @@ const mockOwnerData = {
   email: 'john.smith@signcompany.com',
   phone: '(555) 123-4567',
   company: 'Smith Signs & Graphics',
-  profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+  profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
   address: {
     street: '123 Main Street',
     city: 'Dallas',
@@ -70,7 +70,7 @@ const mockReviews = [
     reviewer: {
       name: 'Sarah Johnson',
       company: 'Johnson Creative Signs',
-      profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 5,
     comment: 'John has been an incredible mentor. His expertise in channel letters helped us streamline our production process and increase efficiency by 30%.',
@@ -81,7 +81,7 @@ const mockReviews = [
     reviewer: {
       name: 'Michael Chen',
       company: 'Chen Signs & Graphics',
-      profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 4,
     comment: 'Great experience working with John on a collaborative project. Very professional and knowledgeable about the industry.',
@@ -92,7 +92,7 @@ const mockReviews = [
     reviewer: {
       name: 'Emily Rodriguez',
       company: 'Bright Signs Co.',
-      profileImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      profileImage: 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c61c7ea6d0f0042107b99.jpeg',
     },
     rating: 5,
     comment: 'John\'s equipment recommendations were spot on. Saved us thousands on our new printer purchase. Highly recommend reaching out to him!',
