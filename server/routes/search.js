@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const searchController = require('../controllers/searchController');
-const auth = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 const rateLimiter = require('../middleware/rateLimiter');
 
 // All search routes require authentication
-router.use(auth);
+router.use(protect);
 
 // Main AI-powered search
 router.post('/', rateLimiter.searchLimiter, searchController.search);
