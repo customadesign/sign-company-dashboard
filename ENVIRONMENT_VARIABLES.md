@@ -22,6 +22,15 @@ OPENROUTER_API_KEY=your-openrouter-api-key
 REDIS_URL=redis://localhost:6379
 ```
 
+## Calendar Configuration (Optional)
+
+```
+# Calendar sharing and iCal feed configuration
+CALENDAR_NAME=Sign Company Calendar
+CALENDAR_TIMEZONE=America/New_York
+DEFAULT_ORGANIZER_EMAIL=events@signcompany.com
+```
+
 ## Optional Variables
 
 ```

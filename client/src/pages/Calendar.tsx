@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ClockIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek, isToday } from 'date-fns';
+import CalendarShareLinks from '../components/calendar/CalendarShareLinks';
+import CalendarShareLinksCompact from '../components/calendar/CalendarShareLinksCompact';
+import { calendarService, CalendarEvent } from '../services/calendarService';
 
+// Map backend CalendarEvent to frontend Event interface
 interface Event {
   id: string;
   title: string;
   date: Date;
   time: string;
   location: string;
-  type: 'meeting' | 'training' | 'convention' | 'webinar' | 'deadline';
+  type: 'meeting' | 'training' | 'convention' | 'webinar' | 'deadline' | 'social' | 'other';
   attendees: number;
   description: string;
+  color?: string;
+  isOnline?: boolean;
+  onlineLink?: string;
+  organizer?: string;
 }
 
 const Calendar = () => {
@@ -18,60 +26,64 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [viewMode, setViewMode] = useState<'month' | 'week' | 'day'>('month');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock events data - Note: Month is 0-indexed (0 = January, 7 = August)
-  const events: Event[] = [
-    {
-      id: '1',
-      title: 'Monthly Owner Meeting',
-      date: new Date(2025, 7, 15, 14, 0), // August 15, 2025
-      time: '2:00 PM - 3:30 PM',
-      location: 'Virtual - Zoom',
-      type: 'meeting',
-      attendees: 45,
-      description: 'Monthly meeting to discuss Q3 goals and performance metrics.'
-    },
-    {
-      id: '2',
-      title: 'Sign Design Workshop',
-      date: new Date(2025, 7, 8, 10, 0), // August 8, 2025
-      time: '10:00 AM - 12:00 PM',
-      location: 'Training Center - Room A',
-      type: 'training',
-      attendees: 25,
-      description: 'Learn advanced techniques for creating eye-catching sign designs.'
-    },
-    {
-      id: '3',
-      title: 'Annual Convention 2025',
-      date: new Date(2025, 7, 22, 9, 0), // August 22, 2025
-      time: 'All Day Event',
-      location: 'Las Vegas Convention Center',
-      type: 'convention',
-      attendees: 500,
-      description: 'The biggest Sign Company event of the year! Network, learn, and celebrate.'
-    },
-    {
-      id: '4',
-      title: 'Digital Marketing Webinar',
-      date: new Date(2025, 7, 18, 13, 0), // August 18, 2025
-      time: '1:00 PM - 2:00 PM',
-      location: 'Online',
-      type: 'webinar',
-      attendees: 120,
-      description: 'Strategies for growing your sign business with digital marketing.'
-    },
-    {
-      id: '5',
-      title: 'Q3 Reports Due',
-      date: new Date(2025, 7, 30, 17, 0), // August 30, 2025 (31st doesn't exist in all months)
-      time: '5:00 PM',
-      location: 'Submit Online',
-      type: 'deadline',
-      attendees: 0,
-      description: 'Quarterly financial and performance reports submission deadline.'
+  // Convert CalendarEvent to Event format
+  const mapCalendarEventToEvent = (calendarEvent: CalendarEvent): Event => {
+    const startDate = new Date(calendarEvent.startDate);
+    const endDate = new Date(calendarEvent.endDate);
+    
+    // Format time display
+    const timeFormat = 'h:mm a';
+    let time: string;
+    if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
+      // Same day event
+      time = `${format(startDate, timeFormat)} - ${format(endDate, timeFormat)}`;
+    } else {
+      // Multi-day event
+      time = `${format(startDate, 'MMM d, yyyy h:mm a')} - ${format(endDate, 'MMM d, yyyy h:mm a')}`;
     }
-  ];
+    
+    return {
+      id: calendarEvent._id,
+      title: calendarEvent.title,
+      date: startDate,
+      time,
+      location: calendarEvent.location || (calendarEvent.isOnline ? 'Online' : 'TBD'),
+      type: calendarEvent.category as Event['type'],
+      attendees: calendarEvent.attendees?.filter(a => a.status === 'confirmed').length || 0,
+      description: calendarEvent.description,
+      color: calendarEvent.color,
+      isOnline: calendarEvent.isOnline,
+      onlineLink: calendarEvent.onlineLink,
+      organizer: calendarEvent.organizer?.name
+    };
+  };
+
+  // Fetch events from backend
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const calendarEvents = await calendarService.getEvents();
+      const mappedEvents = calendarEvents.map(mapCalendarEventToEvent);
+      setEvents(mappedEvents);
+    } catch (err) {
+      console.error('Error fetching events:', err);
+      setError('Failed to load calendar events. Please try again.');
+      // Fallback to empty array
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load events on component mount
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -86,6 +98,8 @@ const Calendar = () => {
       case 'convention': return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'webinar': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'deadline': return 'bg-red-100 text-red-800 border-red-200';
+      case 'social': return 'bg-pink-100 text-pink-800 border-pink-200';
+      case 'other': return 'bg-gray-100 text-gray-800 border-gray-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
@@ -101,7 +115,41 @@ const Calendar = () => {
 
   return (
     <div className="space-y-6">
-        {/* Header */}
+      {/* Loading State */}
+      {loading && (
+        <div className="bg-white shadow-sm rounded-xl p-8">
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+            <span className="ml-3 text-gray-600">Loading calendar events...</span>
+          </div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+            <div className="ml-auto">
+              <button
+                onClick={fetchEvents}
+                className="text-sm text-red-600 hover:text-red-500 font-medium"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Header */}
       <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -109,6 +157,11 @@ const Calendar = () => {
             <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign Company events</p>
           </div>
           <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <CalendarShareLinksCompact 
+              events={events}
+              calendarName="Sign Company Calendar"
+              className="sm:order-last"
+            />
             <button className="inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 hover:border-primary-700 hover:text-primary-700 transition-all duration-200 shadow-sm hover:shadow-md">
               <CalendarDaysIcon className="h-5 w-5 mr-2" />
               Add Event
@@ -236,6 +289,12 @@ const Calendar = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* Calendar Share Links */}
+          <CalendarShareLinks 
+            events={events}
+            calendarName="Sign Company Calendar"
+          />
+          
           {/* Upcoming Events */}
           <div className="bg-white shadow-sm rounded-xl p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Events</h3>
@@ -285,7 +344,8 @@ const Calendar = () => {
                 { type: 'training', label: 'Training Sessions', color: 'bg-green-100 text-green-800' },
                 { type: 'convention', label: 'Conventions', color: 'bg-purple-100 text-purple-800' },
                 { type: 'webinar', label: 'Webinars', color: 'bg-yellow-100 text-yellow-800' },
-                { type: 'deadline', label: 'Deadlines', color: 'bg-red-100 text-red-800' },
+                { type: 'social', label: 'Social Events', color: 'bg-pink-100 text-pink-800' },
+                { type: 'other', label: 'Other Events', color: 'bg-gray-100 text-gray-800' },
               ].map(({ type, label, color }) => (
                 <div key={type} className="flex items-center">
                   <span className={`inline-block w-3 h-3 rounded-full mr-3 ${color.split(' ')[0]}`}></span>

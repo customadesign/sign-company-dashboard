@@ -55,7 +55,16 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Routes
+// Test endpoint to verify deployment
+app.get('/api/test', (req, res) => {
+  res.status(200).json({
+    message: 'API is working!',
+    timestamp: new Date().toISOString(),
+    version: '2.0.0'
+  });
+});
+
+// Routes - These must come AFTER static file serving but BEFORE catch-all
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/events', require('./routes/events'));
@@ -85,12 +94,29 @@ if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, '../client/dist');
   console.log('Serving static files from:', staticPath);
   
-  app.use(express.static(staticPath));
+  // Only serve static files for non-API routes
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      // Skip static file serving for API routes
+      return next();
+    }
+    express.static(staticPath)(req, res, next);
+  });
   
+  // SPA catch-all handler MUST come last
   app.get('*', (req, res) => {
-    const indexPath = path.join(__dirname, '../client/dist/index.html');
-    console.log('Serving index.html from:', indexPath);
-    res.sendFile(indexPath);
+    // Only serve index.html for non-API routes
+    if (!req.path.startsWith('/api/')) {
+      const indexPath = path.join(__dirname, '../client/dist/index.html');
+      console.log('Serving index.html from:', indexPath);
+      res.sendFile(indexPath);
+    } else {
+      // If we reach here, it means an API route wasn't found
+      res.status(404).json({
+        success: false,
+        message: 'API endpoint not found'
+      });
+    }
   });
 }
 

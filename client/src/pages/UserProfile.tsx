@@ -2,112 +2,338 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import {
   UserIcon,
-  CogIcon,
-  CreditCardIcon,
-  ChevronRightIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
+  CalendarIcon,
+  KeyIcon,
+  BellIcon,
+  ShieldCheckIcon,
+  Cog6ToothIcon,
+  CameraIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline';
-import UserSettings from '../components/profile/UserSettings';
-import UserBilling from '../components/profile/UserBilling';
-
-const tabs = [
-  {
-    id: 'settings',
-    name: 'Settings',
-    icon: CogIcon,
-    description: 'Manage your account settings and preferences',
-  },
-  {
-    id: 'billing',
-    name: 'Billing',
-    icon: CreditCardIcon,
-    description: 'View subscription, payment methods, and billing history',
-  },
-];
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const UserProfile = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('settings');
+  const [activeTab, setActiveTab] = useState('profile');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    location: user?.location || '',
+    bio: user?.bio || '',
+  });
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'settings':
-        return <UserSettings />;
-      case 'billing':
-        return <UserBilling />;
-      default:
-        return <UserSettings />;
-    }
+  const handleSave = () => {
+    // Here you would typically make an API call to update the user profile
+    console.log('Saving profile changes:', editForm);
+    setIsEditing(false);
+    // You can add toast notification here
   };
+
+  const handleCancel = () => {
+    setEditForm({
+      name: user?.name || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      location: user?.location || '',
+      bio: user?.bio || '',
+    });
+    setIsEditing(false);
+  };
+
+  const tabs = [
+    { id: 'profile', name: 'Profile Information', icon: UserIcon },
+    { id: 'security', name: 'Security', icon: ShieldCheckIcon },
+    { id: 'notifications', name: 'Notifications', icon: BellIcon },
+    { id: 'settings', name: 'Settings', icon: Cog6ToothIcon },
+  ];
 
   return (
     <div className="space-y-8">
-      {/* Header Section */}
+      {/* Header */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg overflow-hidden">
         <div className="px-6 py-8 sm:px-8 sm:py-10">
-          <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
-            {/* Profile Image */}
-            <div className="flex-shrink-0">
-              <div className="h-24 w-24 rounded-full bg-primary-500 flex items-center justify-center ring-4 ring-white shadow-xl">
-                <UserIcon className="h-12 w-12 text-white" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <div className="relative">
+                <div className="h-20 w-20 rounded-full bg-white/20 flex items-center justify-center">
+                  <UserIcon className="h-10 w-10 text-white" />
+                </div>
+                <button className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-white text-primary-600 flex items-center justify-center shadow-sm hover:bg-gray-50 transition-colors">
+                  <CameraIcon className="h-3 w-3" />
+                </button>
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                  {user?.name || 'Your Profile'}
+                </h1>
+                <p className="mt-1 text-lg text-primary-100">
+                  {user?.role || 'Member'} • Joined {new Date().getFullYear()}
+                </p>
               </div>
             </div>
-            
-            {/* User Info */}
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-3xl font-bold text-white">{user?.name || 'User Profile'}</h1>
-              <p className="text-xl text-primary-100 mt-1">{user?.email}</p>
-              {user?.company && (
-                <p className="text-lg text-primary-200 mt-1">{user.company}</p>
-              )}
-              <div className="mt-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-800 text-primary-100">
-                <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
-                {user?.role === 'admin' ? 'Administrator' : 'Owner'}
-              </div>
-            </div>
+            <button
+              onClick={() => setIsEditing(!isEditing)}
+              className="inline-flex items-center px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-colors duration-200"
+            >
+              <PencilIcon className="h-4 w-4 mr-2" />
+              {isEditing ? 'Cancel' : 'Edit Profile'}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Navigation Tabs */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Tab Navigation */}
         <div className="border-b border-gray-200">
-          <nav className="-mb-px flex" aria-label="Profile tabs">
+          <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative min-w-0 flex-1 overflow-hidden py-6 px-6 text-center hover:bg-gray-50 focus:z-10 transition-colors duration-200 ${
+                className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex items-center space-x-2 transition-colors duration-200 ${
                   activeTab === tab.id
-                    ? 'text-primary-600 border-b-2 border-primary-500'
-                    : 'text-gray-500 hover:text-gray-700'
+                    ? 'border-primary-500 text-primary-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                <div className="flex flex-col items-center space-y-2">
-                  <tab.icon 
-                    className={`h-6 w-6 ${
-                      activeTab === tab.id ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'
-                    }`} 
-                  />
-                  <span className="text-sm font-medium">{tab.name}</span>
-                  <span className="text-xs text-gray-500 hidden sm:block max-w-xs">
-                    {tab.description}
-                  </span>
-                </div>
-                {activeTab === tab.id && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500"
-                  />
-                )}
+                <tab.icon className="h-4 w-4" />
+                <span>{tab.name}</span>
               </button>
             ))}
           </nav>
         </div>
 
         {/* Tab Content */}
-        <div className="p-6 sm:p-8">
-          {renderTabContent()}
+        <div className="p-6">
+          {activeTab === 'profile' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editForm.name}
+                      onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    />
+                  ) : (
+                    <div className="mt-1 flex items-center space-x-2">
+                      <UserIcon className="h-5 w-5 text-gray-400" />
+                      <span className="text-sm text-gray-900">{user?.name || 'Not provided'}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      value={editForm.email}
+                      onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    />
+                  ) : (
+                    <div className="mt-1 flex items-center space-x-2">
+                      <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                      <span className="text-sm text-gray-900">{user?.email || 'Not provided'}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      value={editForm.phone}
+                      onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    />
+                  ) : (
+                    <div className="mt-1 flex items-center space-x-2">
+                      <PhoneIcon className="h-5 w-5 text-gray-400" />
+                      <span className="text-sm text-gray-900">{editForm.phone || 'Not provided'}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Location</label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editForm.location}
+                      onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    />
+                  ) : (
+                    <div className="mt-1 flex items-center space-x-2">
+                      <MapPinIcon className="h-5 w-5 text-gray-400" />
+                      <span className="text-sm text-gray-900">{editForm.location || 'Not provided'}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Bio</label>
+                {isEditing ? (
+                  <textarea
+                    rows={4}
+                    value={editForm.bio}
+                    onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                    placeholder="Tell us about yourself..."
+                  />
+                ) : (
+                  <div className="mt-1 text-sm text-gray-900">
+                    {editForm.bio || 'No bio provided yet.'}
+                  </div>
+                )}
+              </div>
+
+              {isEditing && (
+                <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={handleCancel}
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  >
+                    <XMarkIcon className="h-4 w-4 mr-2" />
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  >
+                    <CheckIcon className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'security' && (
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6">
+                <div className="flex items-center space-x-3">
+                  <KeyIcon className="h-6 w-6 text-primary-600" />
+                  <h3 className="text-lg font-medium text-gray-900">Password & Security</h3>
+                </div>
+                <p className="mt-2 text-sm text-gray-600">
+                  Manage your password and security settings to keep your account safe.
+                </p>
+                <div className="mt-4">
+                  <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700">
+                    Change Password
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6">
+                <div className="flex items-center space-x-3">
+                  <ShieldCheckIcon className="h-6 w-6 text-green-600" />
+                  <h3 className="text-lg font-medium text-gray-900">Two-Factor Authentication</h3>
+                </div>
+                <p className="mt-2 text-sm text-gray-600">
+                  Add an extra layer of security to your account with two-factor authentication.
+                </p>
+                <div className="mt-4">
+                  <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    Enable 2FA
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'notifications' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                  <BellIcon className="h-5 w-5 mr-2 text-primary-600" />
+                  Email Notifications
+                </h3>
+                <p className="mt-1 text-sm text-gray-600">
+                  Choose what updates you want to receive via email.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { id: 'events', label: 'Upcoming Events', description: 'Get notified about new events and updates' },
+                  { id: 'forum', label: 'Forum Activity', description: 'New posts and replies in discussions you follow' },
+                  { id: 'library', label: 'Library Updates', description: 'New files and resources added to the library' },
+                  { id: 'announcements', label: 'Announcements', description: 'Important updates from the platform' },
+                ].map((notification) => (
+                  <div key={notification.id} className="flex items-center justify-between py-3">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{notification.label}</p>
+                      <p className="text-sm text-gray-500">{notification.description}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                      role="switch"
+                      aria-checked="true"
+                    >
+                      <span className="translate-x-5 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                  <Cog6ToothIcon className="h-5 w-5 mr-2 text-primary-600" />
+                  Account Settings
+                </h3>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage your account preferences and settings.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between py-4 border-b border-gray-200">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Account Status</p>
+                    <p className="text-sm text-gray-500">Your account is active and verified</p>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Active
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between py-4 border-b border-gray-200">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Member Since</p>
+                    <p className="text-sm text-gray-500">{new Date().toLocaleDateString()}</p>
+                  </div>
+                  <CalendarIcon className="h-5 w-5 text-gray-400" />
+                </div>
+
+                <div className="pt-4">
+                  <button className="text-sm text-red-600 hover:text-red-700 font-medium">
+                    Delete Account
+                  </button>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Permanently delete your account and all associated data.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
