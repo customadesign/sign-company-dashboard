@@ -195,7 +195,7 @@ const OwnerProfileEnhanced = () => {
             <div className="flex-shrink-0 profile-image-container">
               <img
                 className="h-32 w-32 rounded-full border-4 border-white shadow-xl object-cover"
-                src={owner.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(owner.name)}&size=128&background=1890ff&color=fff`}
+                src={owner.profileImage || 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg'}
                 alt={owner.name}
               />
             </div>
@@ -465,7 +465,7 @@ const OwnerProfileEnhanced = () => {
                       <div className="flex items-start space-x-4">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
-                          src={review.reviewer.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(review.reviewer.name)}&size=40&background=1890ff&color=fff`}
+                          src={review.reviewer.profileImage || 'https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c5ffcf231e64e5d99cb2b.jpeg'}
                           alt={review.reviewer.name}
                         />
                         <div className="flex-1">
