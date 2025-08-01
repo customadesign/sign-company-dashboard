@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 // import App from './test-app.tsx'
 
-console.log('Main.tsx loading');
+console.log('Main.tsx loading - v2');
 const rootElement = document.getElementById('root');
 console.log('Root element:', rootElement);
 
