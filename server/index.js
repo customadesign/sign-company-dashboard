@@ -26,7 +26,8 @@ const corsOptions = {
       process.env.CLIENT_URL || 'http://localhost:5173',
       'http://localhost:5173',
       'http://localhost:5001',
-      'https://sign-company.onrender.com'
+      'https://sign-company.onrender.com',
+      'https://customadesign.github.io'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
@@ -64,6 +65,43 @@ app.get('/api/test', (req, res) => {
   });
 });
 
+// Debug endpoint to check if routes are loaded
+app.get('/api/debug/routes', (req, res) => {
+  const routes = [];
+  app._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      // Direct routes
+      routes.push({
+        path: middleware.route.path,
+        method: Object.keys(middleware.route.methods)
+      });
+    } else if (middleware.name === 'router') {
+      // Router middleware
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          const prefix = middleware.regexp.source
+            .replace('\\/', '/')
+            .replace('/?(?=\\/|$)', '')
+            .replace(/\\/g, '/')
+            .replace('^', '')
+            .replace('$', '');
+          routes.push({
+            path: prefix + handler.route.path,
+            method: Object.keys(handler.route.methods)
+          });
+        }
+      });
+    }
+  });
+  
+  res.json({
+    message: 'Available routes',
+    totalRoutes: routes.length,
+    routes: routes.filter(r => r.path.includes('/api/')),
+    ownersRoutes: routes.filter(r => r.path.includes('/owners'))
+  });
+});
+
 // Routes - These must come AFTER static file serving but BEFORE catch-all
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
@@ -79,6 +117,16 @@ app.use('/api/videos', require('./routes/videos'));
 app.use('/api/equipment', require('./routes/equipment'));
 app.use('/api/faqs', require('./routes/faqs'));
 app.use('/api/search', require('./routes/search'));
+
+// Add API route debugging
+app.use('/api/*', (req, res, next) => {
+  console.log(`API Route not found: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({
+    success: false,
+    message: `API endpoint not found: ${req.originalUrl}`,
+    method: req.method
+  });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
