@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
+import ErrorBoundary from './components/ErrorBoundary';
 // import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
@@ -35,12 +36,17 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  console.log('App component rendering');
+  console.log('Environment:', import.meta.env.MODE);
+  console.log('API URL:', import.meta.env.VITE_API_URL);
+  
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <AuthProvider>
-          <Toaster position="top-right" />
-          <Routes>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <AuthProvider>
+            <Toaster position="top-right" />
+            <Routes>
             <Route path="/login" element={<Login />} />
             <Route
               path="/"
@@ -67,6 +73,7 @@ function App() {
         </AuthProvider>
       </Router>
     </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

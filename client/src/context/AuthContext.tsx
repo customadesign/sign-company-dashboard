@@ -35,25 +35,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Set axios defaults
   axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:9000/api';
+  console.log('AuthContext: API URL set to', axios.defaults.baseURL);
   
   useEffect(() => {
+    console.log('AuthContext: Checking for existing token');
     const token = localStorage.getItem('token');
     if (token) {
+      console.log('AuthContext: Token found, attempting to fetch user');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       // Verify token and get user info
       fetchUser();
     } else {
+      console.log('AuthContext: No token found, setting loading to false');
       setLoading(false);
     }
   }, []);
 
   const fetchUser = async () => {
     try {
+      console.log('AuthContext: Fetching user data');
       const response = await axios.get('/auth/me');
+      console.log('AuthContext: User data received', response.data);
       setUser(response.data.data);
-    } catch (error) {
+    } catch (error: any) {
+      console.error('AuthContext: Error fetching user', error.response?.status, error.message);
       localStorage.removeItem('token');
       delete axios.defaults.headers.common['Authorization'];
+      // Don't navigate to login here - let the app render normally
     } finally {
       setLoading(false);
     }
@@ -89,5 +97,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isAdmin: user?.role === 'admin',
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading...</p>
+          </div>
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 };

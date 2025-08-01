@@ -40,6 +40,8 @@ const Layout = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  
+  console.log('Layout: Rendering with user:', user);
 
   return (
     <div className="min-h-screen bg-gray-100 flex">

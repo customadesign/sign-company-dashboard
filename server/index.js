@@ -17,10 +17,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      process.env.CLIENT_URL || 'http://localhost:5173',
+      'http://localhost:5173',
+      'http://localhost:5001',
+      'https://sign-company.onrender.com'
+    ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(null, true); // For now, allow all origins in production
+    }
+  },
   credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
