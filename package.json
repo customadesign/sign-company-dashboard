@@ -9,8 +9,7 @@
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
     "start": "NODE_ENV=production node server/index.js",
-    "install-all": "npm install && cd client && npm install",
-    "postinstall": "npm run install-all"
+    "install-all": "npm install && cd client && npm install"
   },
   "keywords": ["dashboard", "sign-company", "mern"],
   "author": "",
