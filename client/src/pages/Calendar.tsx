@@ -175,11 +175,11 @@ const Calendar = () => {
             </div>
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-px bg-gray-200 rounded-lg overflow-hidden">
+            <div className="grid grid-cols-7 gap-px bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
               {/* Week days */}
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className="bg-gray-50 px-1 sm:px-2 py-2 sm:py-3 text-center">
-                  <span className="text-xs font-semibold text-gray-700">{day}</span>
+                <div key={day} className="bg-gray-50 px-1 sm:px-2 py-2 sm:py-3 text-center border-b border-gray-200">
+                  <span className="text-xs font-semibold text-gray-600">{day}</span>
                 </div>
               ))}
               
@@ -195,14 +195,14 @@ const Calendar = () => {
                     key={idx}
                     onClick={() => setSelectedDate(day)}
                     className={`
-                      bg-white p-1 sm:p-2 min-h-[80px] sm:min-h-[100px] cursor-pointer transition-all
-                      ${!isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}
-                      ${isSelected ? 'ring-2 ring-primary-500 bg-primary-50' : 'hover:bg-gray-50'}
+                      bg-white p-1 sm:p-2 min-h-[80px] sm:min-h-[100px] cursor-pointer transition-all border-r border-b border-gray-100 last:border-r-0
+                      ${!isCurrentMonth ? 'text-gray-400 bg-gray-25' : 'text-gray-900'}
+                      ${isSelected ? 'ring-2 ring-primary-400 bg-primary-25 shadow-sm' : 'hover:bg-gray-50 hover:shadow-sm'}
                     `}
                   >
                     <div className={`
-                      inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 text-xs sm:text-base rounded-full mb-1
-                      ${isTodayDate ? 'bg-primary-600 text-white font-semibold' : ''}
+                      inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 text-xs sm:text-base rounded-full mb-1 transition-colors
+                      ${isTodayDate ? 'bg-primary-600 text-white font-semibold shadow-sm' : 'hover:bg-gray-100'}
                     `}>
                       {format(day, 'd')}
                     </div>
@@ -299,13 +299,13 @@ const Calendar = () => {
 
       {/* Event Details Modal */}
       {selectedEvent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center sm:p-4 z-50">
-          <div className="bg-white rounded-t-xl sm:rounded-xl max-w-lg w-full p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-40 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4 z-50">
+          <div className="bg-white rounded-t-xl sm:rounded-xl max-w-lg w-full p-4 sm:p-6 max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">{selectedEvent.title}</h3>
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -313,23 +313,23 @@ const Calendar = () => {
               </button>
             </div>
             
-            <div className="space-y-3 mb-6">
+            <div className="space-y-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
               <div className="flex items-center text-gray-700">
-                <CalendarDaysIcon className="h-5 w-5 mr-3 text-gray-400" />
-                {format(selectedEvent.date, 'EEEE, MMMM d, yyyy')}
+                <CalendarDaysIcon className="h-5 w-5 mr-3 text-primary-500" />
+                <span className="font-medium">{format(selectedEvent.date, 'EEEE, MMMM d, yyyy')}</span>
               </div>
               <div className="flex items-center text-gray-700">
-                <ClockIcon className="h-5 w-5 mr-3 text-gray-400" />
-                {selectedEvent.time}
+                <ClockIcon className="h-5 w-5 mr-3 text-primary-500" />
+                <span className="font-medium">{selectedEvent.time}</span>
               </div>
               <div className="flex items-center text-gray-700">
-                <MapPinIcon className="h-5 w-5 mr-3 text-gray-400" />
-                {selectedEvent.location}
+                <MapPinIcon className="h-5 w-5 mr-3 text-primary-500" />
+                <span className="font-medium">{selectedEvent.location}</span>
               </div>
               {selectedEvent.attendees > 0 && (
                 <div className="flex items-center text-gray-700">
-                  <UserGroupIcon className="h-5 w-5 mr-3 text-gray-400" />
-                  {selectedEvent.attendees} attendees
+                  <UserGroupIcon className="h-5 w-5 mr-3 text-primary-500" />
+                  <span className="font-medium">{selectedEvent.attendees} attendees</span>
                 </div>
               )}
             </div>
