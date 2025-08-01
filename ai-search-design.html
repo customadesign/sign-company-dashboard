@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Search Box Design - Sign Company Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .design-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .design-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        /* Header Mock */
+        .header-mock {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 70px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+        }
+
+        /* AI Search Box Styles */
+        .ai-search-container {
+            position: relative;
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+        }
+
+        .ai-search-box {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .ai-search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .ai-search-box.active {
+            border-color: #667eea;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .search-icon-wrapper {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .ai-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* Loading State */
+        .loading-indicator {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite both;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Suggestions Dropdown */
+        .suggestions-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .suggestions-dropdown.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .suggestion-category {
+            padding: 0.75rem 1rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .suggestion-item {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .suggestion-item:hover {
+            background: #f7fafc;
+            border-left-color: #667eea;
+        }
+
+        .suggestion-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .icon-file { background: #e6f7ff; color: #1890ff; }
+        .icon-owner { background: #f6ffed; color: #52c41a; }
+        .icon-event { background: #fff1f0; color: #ff4d4f; }
+        .icon-insight { background: #f9f0ff; color: #722ed1; }
+
+        .suggestion-content {
+            flex: 1;
+        }
+
+        .suggestion-title {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 2px;
+        }
+
+        .suggestion-description {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .suggestion-meta {
+            font-size: 0.75rem;
+            color: #a0aec0;
+        }
+
+        /* Search States */
+        .state-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .state-card {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .state-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-mock {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .ai-search-container {
+                margin: 0;
+                width: 100%;
+            }
+
+            .suggestions-dropdown {
+                position: fixed;
+                top: 140px;
+                left: 1rem;
+                right: 1rem;
+                max-height: calc(100vh - 160px);
+            }
+        }
+
+        /* Micro-interactions */
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        /* Code Examples */
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="design-container">
+        <h1>AI-Powered Search Box Design</h1>
+        
+        <!-- Visual Mockup Section -->
+        <div class="design-section">
+            <h2>Visual Mockup - Default State</h2>
+            <div class="header-mock">
+                <div class="logo-area">
+                    <div class="logo"></div>
+                    <span style="font-weight: 600;">Sign Company</span>
+                </div>
+                
+                <div class="ai-search-container">
+                    <input type="text" class="ai-search-box" placeholder="Ask AI anything: 'Show signs pending approval' or 'Revenue last month'...">
+                    <div class="search-icon-wrapper">
+                        <div class="ai-icon">AI</div>
+                    </div>
+                    <div class="loading-indicator">
+                        <div class="loading-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active State with Suggestions -->
+        <div class="design-section">
+            <h2>Active State - With AI Suggestions</h2>
+            <div class="header-mock">
+                <div class="logo-area">
+                    <div class="logo"></div>
+                    <span style="font-weight: 600;">Sign Company</span>
+                </div>
+                
+                <div class="ai-search-container">
+                    <input type="text" class="ai-search-box active" value="pending signs" placeholder="Ask AI anything...">
+                    <div class="search-icon-wrapper">
+                        <div class="ai-icon pulse-animation">AI</div>
+                    </div>
+                    
+                    <div class="suggestions-dropdown active">
+                        <div class="suggestion-category">Suggested Queries</div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon icon-file">📄</div>
+                            <div class="suggestion-content">
+                                <div class="suggestion-title">Signs pending approval</div>
+                                <div class="suggestion-description">12 signs awaiting manager review</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon icon-event">📅</div>
+                            <div class="suggestion-content">
+                                <div class="suggestion-title">Pending installations this week</div>
+                                <div class="suggestion-description">8 installations scheduled</div>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-category">Recent Files</div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon icon-file">📄</div>
+                            <div class="suggestion-content">
+                                <div class="suggestion-title">Downtown Plaza Sign - Pending</div>
+                                <div class="suggestion-meta">Last modified 2 hours ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-category">AI Insights</div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon icon-insight">💡</div>
+                            <div class="suggestion-content">
+                                <div class="suggestion-title">3 signs have been pending for over 7 days</div>
+                                <div class="suggestion-description">Click to view and take action</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search States -->
+        <div class="design-section">
+            <h2>Search Box States</h2>
+            <div class="state-examples">
+                <div class="state-card">
+                    <div class="state-title">Empty State</div>
+                    <div class="ai-search-container" style="margin: 0 auto;">
+                        <input type="text" class="ai-search-box" placeholder="Ask AI anything...">
+                        <div class="search-icon-wrapper">
+                            <div class="ai-icon">AI</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="state-card">
+                    <div class="state-title">Typing State</div>
+                    <div class="ai-search-container" style="margin: 0 auto;">
+                        <input type="text" class="ai-search-box active" value="revenue last">
+                        <div class="search-icon-wrapper">
+                            <div class="ai-icon pulse-animation">AI</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="state-card">
+                    <div class="state-title">Loading State</div>
+                    <div class="ai-search-container" style="margin: 0 auto;">
+                        <input type="text" class="ai-search-box active" value="Show me revenue trends">
+                        <div class="search-icon-wrapper">
+                            <div class="ai-icon">AI</div>
+                        </div>
+                        <div class="loading-indicator active">
+                            <div class="loading-dots">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UI/UX Considerations -->
+        <div class="design-section">
+            <h2>UI/UX Design Principles</h2>
+            
+            <h3>1. Visual Design</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>AI icon with gradient animation to indicate intelligence</li>
+                <li>Subtle shadow elevation on focus for depth</li>
+                <li>Rounded corners (12px) for modern, friendly appearance</li>
+                <li>Shimmer effect on AI icon for premium feel</li>
+            </ul>
+            
+            <h3>2. Interaction Design</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Instant visual feedback with border color change</li>
+                <li>Smooth transitions (300ms) for all state changes</li>
+                <li>Pulse animation during AI processing</li>
+                <li>Keyboard navigation support (arrow keys for suggestions)</li>
+            </ul>
+            
+            <h3>3. Content Strategy</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Natural language placeholder text with examples</li>
+                <li>Categorized results for easy scanning</li>
+                <li>Smart suggestions based on user role and recent activity</li>
+                <li>Context-aware descriptions in results</li>
+            </ul>
+        </div>
+
+        <!-- Implementation Example -->
+        <div class="design-section">
+            <h2>React Component Structure</h2>
+            <div class="code-block">
+                <pre>// AISearchBox.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useOpenRouter } from '../hooks/useOpenRouter';
+import './AISearchBox.css';
+
+const AISearchBox = () => {
+  const [query, setQuery] = useState('');
+  const [isActive, setIsActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const searchRef = useRef(null);
+  const { searchWithAI } = useOpenRouter();
+
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query.length > 2) {
+        performAISearch(query);
+      }
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const performAISearch = async (searchQuery) => {
+    setIsLoading(true);
+    try {
+      const results = await searchWithAI(searchQuery);
+      setSuggestions(categorizeResults(results));
+    } catch (error) {
+      console.error('AI search error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const categorizeResults = (results) => {
+    // Categorize results by type
+    return {
+      queries: results.filter(r => r.type === 'query'),
+      files: results.filter(r => r.type === 'file'),
+      owners: results.filter(r => r.type === 'owner'),
+      insights: results.filter(r => r.type === 'insight')
+    };
+  };
+
+  return (
+    &lt;div className="ai-search-container"&gt;
+      &lt;div className="search-icon-wrapper"&gt;
+        &lt;motion.div 
+          className="ai-icon"
+          animate={{ scale: isActive ? [1, 1.1, 1] : 1 }}
+          transition={{ duration: 2, repeat: isActive ? Infinity : 0 }}
+        &gt;
+          AI
+        &lt;/motion.div&gt;
+      &lt;/div&gt;
+      
+      &lt;input
+        ref={searchRef}
+        type="text"
+        className={`ai-search-box ${isActive ? 'active' : ''}`}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => setIsActive(true)}
+        onBlur={() => setTimeout(() => setIsActive(false), 200)}
+        placeholder="Ask AI anything: 'Show signs pending approval'..."
+      /&gt;
+      
+      &lt;AnimatePresence&gt;
+        {isLoading && (
+          &lt;motion.div 
+            className="loading-indicator"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          &gt;
+            &lt;div className="loading-dots"&gt;
+              &lt;div className="dot" /&gt;
+              &lt;div className="dot" /&gt;
+              &lt;div className="dot" /&gt;
+            &lt;/div&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+      
+      &lt;AnimatePresence&gt;
+        {isActive && suggestions && (
+          &lt;motion.div 
+            className="suggestions-dropdown"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          &gt;
+            {/* Render categorized suggestions */}
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/div&gt;
+  );
+};</pre>
+            </div>
+        </div>
+
+        <!-- Mobile Responsive Design -->
+        <div class="design-section">
+            <h2>Mobile Responsive Behavior</h2>
+            <p style="color: #4a5568; margin-bottom: 1rem;">
+                On mobile devices, the search box expands to full width with the following adaptations:
+            </p>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Header stacks vertically with search below logo</li>
+                <li>Suggestions dropdown becomes fixed position for better scrolling</li>
+                <li>Larger touch targets (minimum 44px)</li>
+                <li>Virtual keyboard optimization with proper input types</li>
+                <li>Swipe gestures to dismiss suggestions</li>
+            </ul>
+        </div>
+
+        <!-- Micro-interactions -->
+        <div class="design-section">
+            <h2>Micro-interactions & Animations</h2>
+            
+            <h3>1. AI Icon Animation</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Shimmer effect continuously runs to indicate AI presence</li>
+                <li>Pulse animation when actively processing</li>
+                <li>Gradient shift on hover</li>
+            </ul>
+            
+            <h3>2. Search Box Transitions</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Border color transition (300ms ease)</li>
+                <li>Shadow elevation on focus</li>
+                <li>Smooth placeholder text fade</li>
+            </ul>
+            
+            <h3>3. Suggestions Dropdown</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Fade in with subtle slide (300ms)</li>
+                <li>Stagger animation for list items</li>
+                <li>Hover state with left border accent</li>
+                <li>Smooth scroll with momentum on mobile</li>
+            </ul>
+            
+            <h3>4. Loading States</h3>
+            <ul style="margin-left: 1.5rem; color: #4a5568;">
+                <li>Bouncing dots with staggered animation</li>
+                <li>Skeleton screens for result placeholders</li>
+                <li>Progressive content revelation</li>
+            </ul>
+        </div>
+
+        <!-- OpenRouter Integration -->
+        <div class="design-section">
+            <h2>OpenRouter AI Integration</h2>
+            <div class="code-block">
+                <pre>// useOpenRouter.js
+import { useState } from 'react';
+
+export const useOpenRouter = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  const searchWithAI = async (query) => {
+    setIsProcessing(true);
+    
+    try {
+      const response = await fetch('/api/ai-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          context: {
+            module: getCurrentModule(),
+            userRole: getUserRole(),
+            recentActivity: getRecentActivity()
+          }
+        })
+      });
+      
+      const data = await response.json();
+      
+      // Process AI response into categorized results
+      return processAIResponse(data);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  
+  const processAIResponse = (aiResponse) => {
+    // Convert natural language AI response into structured data
+    return {
+      suggestions: aiResponse.suggestions,
+      directAnswers: aiResponse.directAnswers,
+      relevantFiles: aiResponse.files,
+      insights: aiResponse.insights
+    };
+  };
+  
+  return { searchWithAI, isProcessing };
+};</pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
