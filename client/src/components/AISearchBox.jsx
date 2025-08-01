@@ -162,7 +162,22 @@ const AISearchBox = ({ compact = false, onSearchFocus }) => {
           )}
         </div>
         
-        <div className="ai-badge">
+        <button 
+          className="ai-badge"
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen(false);
+              setQuery('');
+              setShowQuickActions(false);
+              inputRef.current?.blur();
+            } else {
+              inputRef.current?.focus();
+              setIsOpen(true);
+              setShowQuickActions(!query);
+            }
+          }}
+          title="Toggle AI Search"
+        >
           <motion.div
             animate={{ rotate: isFocused ? 360 : 0 }}
             transition={{ duration: 0.5 }}
@@ -175,7 +190,7 @@ const AISearchBox = ({ compact = false, onSearchFocus }) => {
             animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
-        </div>
+        </button>
       </div>
 
       <AnimatePresence>
