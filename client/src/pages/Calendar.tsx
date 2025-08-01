@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ClockIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek, isToday } from 'date-fns';
+import CalendarShareLinks from '../components/calendar/CalendarShareLinks';
+import CalendarShareLinksCompact from '../components/calendar/CalendarShareLinksCompact';
 
 interface Event {
   id: string;
@@ -109,6 +111,11 @@ const Calendar = () => {
             <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign Company events</p>
           </div>
           <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <CalendarShareLinksCompact 
+              events={events}
+              calendarName="Sign Company Calendar"
+              className="sm:order-last"
+            />
             <button className="inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
               <CalendarDaysIcon className="h-5 w-5 mr-2" />
               Add Event
@@ -236,6 +243,12 @@ const Calendar = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* Calendar Share Links */}
+          <CalendarShareLinks 
+            events={events}
+            calendarName="Sign Company Calendar"
+          />
+          
           {/* Upcoming Events */}
           <div className="bg-white shadow-sm rounded-xl p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Events</h3>

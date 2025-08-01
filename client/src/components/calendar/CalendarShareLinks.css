@@ -1,0 +1,329 @@
+/* Calendar Share Links Styles */
+.calendar-share-links {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6;
+}
+
+.share-header {
+  @apply space-y-2;
+}
+
+.share-title {
+  @apply flex items-center space-x-2;
+}
+
+.share-title h3 {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.share-description {
+  @apply text-sm text-gray-600 leading-relaxed;
+}
+
+/* Error States */
+.error-banner {
+  @apply flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg;
+}
+
+.error-banner svg {
+  @apply h-5 w-5 text-red-500 flex-shrink-0;
+}
+
+.error-banner span {
+  @apply text-sm text-red-700 flex-1 mx-3;
+}
+
+.retry-btn {
+  @apply px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 rounded-md transition-colors;
+}
+
+/* Share Options */
+.share-options {
+  @apply space-y-4;
+}
+
+.share-option {
+  @apply border border-gray-200 rounded-lg p-4 space-y-3 hover:border-gray-300 transition-colors;
+}
+
+.share-option-header {
+  @apply flex items-start justify-between;
+}
+
+.share-option-info {
+  @apply flex items-start space-x-3 flex-1;
+}
+
+.share-option-icon {
+  @apply text-2xl flex-shrink-0;
+}
+
+.share-option-name {
+  @apply font-medium text-gray-900 text-base;
+}
+
+.share-option-description {
+  @apply text-sm text-gray-600 mt-1;
+}
+
+.share-option-actions {
+  @apply flex items-center space-x-2 flex-wrap gap-2;
+}
+
+.share-btn {
+  @apply inline-flex items-center space-x-2 px-4 py-2 rounded-lg text-white font-medium text-sm transition-colors no-underline;
+}
+
+.share-btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.share-btn svg {
+  @apply h-4 w-4;
+}
+
+.copy-btn {
+  @apply inline-flex items-center space-x-2 px-3 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors;
+}
+
+.copy-btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.copy-btn svg {
+  @apply h-4 w-4;
+}
+
+/* iCal URL Display */
+.ical-url-display {
+  @apply mt-3 space-y-2;
+}
+
+.ical-label {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.ical-url-container {
+  @apply flex items-center space-x-2;
+}
+
+.ical-url-input {
+  @apply flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+}
+
+.ical-copy-btn {
+  @apply p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors;
+}
+
+.ical-copy-btn svg {
+  @apply h-4 w-4;
+}
+
+/* Share Info */
+.share-info {
+  @apply space-y-2 p-4 bg-gray-50 rounded-lg;
+}
+
+.info-item {
+  @apply text-sm text-gray-600;
+}
+
+.info-item strong {
+  @apply text-gray-900 font-medium;
+}
+
+/* Loading States */
+.loading-overlay {
+  @apply absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center space-x-3;
+}
+
+.loading-spinner {
+  @apply animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600;
+}
+
+.loading-overlay span {
+  @apply text-sm text-gray-600;
+}
+
+/* Compact Version Styles */
+.calendar-share-compact {
+  @apply relative;
+}
+
+.share-toggle-btn {
+  @apply inline-flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+.share-toggle-btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.share-toggle-btn svg {
+  @apply h-4 w-4;
+}
+
+.share-panel-dropdown {
+  @apply absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4 space-y-3;
+}
+
+.error-message {
+  @apply flex items-center space-x-2 p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700;
+}
+
+.error-message svg {
+  @apply h-4 w-4 flex-shrink-0;
+}
+
+.share-options-compact {
+  @apply space-y-2;
+}
+
+.share-option-compact {
+  @apply flex items-center justify-between space-x-2;
+}
+
+.share-link-compact {
+  @apply inline-flex items-center space-x-2 px-3 py-2 rounded-md text-white font-medium text-sm transition-colors no-underline flex-1;
+}
+
+.share-link-compact:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.share-link-compact .share-icon {
+  @apply text-base;
+}
+
+.copy-btn-compact {
+  @apply p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors flex-shrink-0;
+}
+
+.copy-btn-compact:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.copy-btn-compact svg {
+  @apply h-3 w-3;
+}
+
+/* Compact Wrapper */
+.calendar-share-compact-wrapper {
+  @apply inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .calendar-share-links {
+    @apply p-4;
+  }
+  
+  .share-option {
+    @apply p-3;
+  }
+  
+  .share-option-actions {
+    @apply flex-col items-stretch;
+  }
+  
+  .share-btn,
+  .copy-btn {
+    @apply w-full justify-center;
+  }
+  
+  .ical-url-container {
+    @apply flex-col space-x-0 space-y-2;
+  }
+  
+  .ical-copy-btn {
+    @apply w-full justify-center;
+  }
+  
+  .share-panel-dropdown {
+    @apply w-72 right-0 left-auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .share-panel-dropdown {
+    @apply fixed top-16 left-4 right-4 w-auto;
+  }
+  
+  .share-option-info {
+    @apply flex-col space-x-0 space-y-2;
+  }
+  
+  .share-option-icon {
+    @apply self-start;
+  }
+}
+
+/* Dark mode support (if implemented) */
+@media (prefers-color-scheme: dark) {
+  .calendar-share-links {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .share-title h3,
+  .share-option-name,
+  .info-item strong {
+    @apply text-gray-100;
+  }
+  
+  .share-description,
+  .share-option-description,
+  .info-item {
+    @apply text-gray-300;
+  }
+  
+  .share-option {
+    @apply border-gray-700 hover:border-gray-600 bg-gray-800;
+  }
+  
+  .ical-url-input {
+    @apply bg-gray-700 border-gray-600 text-gray-200;
+  }
+  
+  .share-info {
+    @apply bg-gray-700;
+  }
+}
+
+/* Accessibility */
+.share-btn:focus,
+.copy-btn:focus,
+.share-toggle-btn:focus,
+.ical-copy-btn:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+/* Animation */
+.share-panel-dropdown {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print styles */
+@media print {
+  .calendar-share-links {
+    @apply shadow-none border-gray-400;
+  }
+  
+  .share-btn,
+  .copy-btn,
+  .share-toggle-btn {
+    @apply hidden;
+  }
+  
+  .ical-url-display {
+    @apply block;
+  }
+}
