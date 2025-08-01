@@ -3,7 +3,7 @@ services:
   - type: web
     name: Sign Company
     runtime: node
-    buildCommand: NODE_ENV=development npm run install-all && NODE_ENV=production npm run build
+    buildCommand: npm run install-all && npm run build
     startCommand: npm start
     healthCheckPath: /health
     envVars:
@@ -19,3 +19,5 @@ services:
         sync: false
       - key: VITE_API_URL
         value: https://sign-company.onrender.com/api
+      - key: VITE_GOOGLE_MAPS_API_KEY
+        sync: false
