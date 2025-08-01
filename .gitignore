@@ -42,3 +42,16 @@ Thumbs.db
 # Uploads
 uploads/
 temp/
+
+# Logs
+*.log
+server-output.log
+dev-server.log
+client/client.log
+
+# GitHub Pages
+client/dist/
+
+# Environment specific
+.env.production
+.env.development
