@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.GITHUB_PAGES ? '/signworld-dashboard/' : '/',
+  base: process.env.GITHUB_PAGES ? '/sign-company-dashboard/' : '/',
   server: {
     port: 5173,
     host: '127.0.0.1',
