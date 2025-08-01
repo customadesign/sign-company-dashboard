@@ -14,6 +14,7 @@ import Calendar from './pages/Calendar';
 import Convention from './pages/Convention';
 import Brags from './pages/Brags';
 import Forum from './pages/Forum';
+import ForumThread from './pages/ForumThread';
 import Library from './pages/Library';
 import Resources from './pages/Resources';
 import OwnersRoster from './pages/OwnersRoster';
@@ -58,6 +59,7 @@ function App() {
               <Route path="convention" element={<Convention />} />
               <Route path="brags" element={<Brags />} />
               <Route path="forum" element={<Forum />} />
+              <Route path="forum/thread/:id" element={<ForumThread />} />
               <Route path="library" element={<Library />} />
               <Route path="resources" element={<Resources />} />
               <Route path="owners" element={<OwnersRoster />} />

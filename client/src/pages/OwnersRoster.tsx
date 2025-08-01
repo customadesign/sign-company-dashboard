@@ -317,12 +317,12 @@ const OwnersRoster = () => {
                     <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-bold text-xl">
                       {owner.avatar}
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900">{owner.name}</h3>
-                      <p className="text-sm text-gray-600">{owner.company}</p>
+                    <div className="ml-4 min-w-0">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{owner.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 truncate">{owner.company}</p>
                       <div className="flex items-center mt-1">
                         <MapPinIcon className="h-4 w-4 text-gray-400 mr-1" />
-                        <span className="text-sm text-gray-500">{owner.location}</span>
+                        <span className="text-xs sm:text-sm text-gray-500 truncate">{owner.location}</span>
                       </div>
                     </div>
                   </div>
@@ -370,14 +370,14 @@ const OwnersRoster = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="mt-6 flex gap-2">
+                <div className="mt-6 flex flex-col sm:flex-row gap-2">
                   <button 
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       // Handle email action
                     }}
-                    className="flex-1 inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                    className="flex-1 inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-xs sm:text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                     <EnvelopeIcon className="h-4 w-4 mr-1.5 text-gray-400" />
                     Email
                   </button>
@@ -387,7 +387,7 @@ const OwnersRoster = () => {
                       e.stopPropagation();
                       // Handle message action
                     }}
-                    className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-primary-600 text-sm font-medium rounded-lg text-white hover:bg-primary-700 transition-colors">
+                    className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-primary-600 text-xs sm:text-sm font-medium rounded-lg text-white hover:bg-primary-700 transition-colors">
                     <ChatBubbleLeftIcon className="h-4 w-4 mr-1.5" />
                     Message
                   </button>
@@ -431,14 +431,14 @@ const OwnersRoster = () => {
                           {owner.avatar}
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{owner.name}</div>
-                          <div className="text-sm text-gray-500">{owner.company}</div>
+                          <div className="text-xs sm:text-sm font-medium text-gray-900">{owner.name}</div>
+                          <div className="text-xs sm:text-sm text-gray-500">{owner.company}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{owner.location}</div>
-                      <div className="text-sm text-gray-500">{owner.territory}</div>
+                      <div className="text-xs sm:text-sm text-gray-900">{owner.location}</div>
+                      <div className="text-xs sm:text-sm text-gray-500">{owner.territory}</div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1 max-w-xs">
@@ -453,12 +453,12 @@ const OwnersRoster = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <div className="flex items-center gap-4">
-                        <div>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+                        <div className="text-xs sm:text-sm">
                           <span className="text-gray-500">Projects: </span>
                           <span className="font-medium text-gray-900">{owner.totalProjects}</span>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-xs sm:text-sm">
                           <StarSolidIcon className="h-4 w-4 text-yellow-400 mr-1" />
                           <span className="font-medium text-gray-900">{owner.rating}</span>
                         </div>
@@ -470,12 +470,14 @@ const OwnersRoster = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <Link to={`/owners/${owner.id}`} className="text-primary-600 hover:text-primary-900 mr-3">
-                        View Profile
-                      </Link>
-                      <button className="text-gray-600 hover:text-gray-900">
-                        Contact
-                      </button>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Link to={`/owners/${owner.id}`} className="text-primary-600 hover:text-primary-900 text-xs sm:text-sm">
+                          View Profile
+                        </Link>
+                        <button className="text-gray-600 hover:text-gray-900 text-xs sm:text-sm">
+                          Contact
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

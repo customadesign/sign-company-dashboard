@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ChatBubbleLeftRightIcon,
   FireIcon,
@@ -260,13 +261,13 @@ const Forum = () => {
                       className="w-full group"
                     >
                       <div className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="flex items-center">
+                        <div className="flex items-center min-w-0">
                           <div className={`p-2 rounded-lg ${category.bg}`}>
                             <category.icon className={`h-5 w-5 ${category.color}`} />
                           </div>
-                          <div className="ml-3 text-left">
-                            <p className="text-sm font-medium text-gray-900">{category.name}</p>
-                            <p className="text-xs text-gray-500">{category.count} threads</p>
+                          <div className="ml-3 text-left min-w-0">
+                            <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{category.name}</p>
+                            <p className="text-xs text-gray-500 truncate">{category.count} threads</p>
                           </div>
                         </div>
                         {category.subcategories && (
@@ -371,11 +372,13 @@ const Forum = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 hover:text-primary-600 cursor-pointer transition-colors flex items-center gap-2">
-                            {thread.isPinned && <FireIcon className="h-5 w-5 text-orange-500" />}
-                            {thread.isLocked && <LockSolidIcon className="h-4 w-4 text-gray-500" />}
-                            {thread.title}
-                          </h3>
+                          <Link to={`/forum/thread/${thread.id}`}>
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 hover:text-primary-600 cursor-pointer transition-colors flex items-center gap-2 line-clamp-2">
+                              {thread.isPinned && <FireIcon className="h-5 w-5 text-orange-500" />}
+                              {thread.isLocked && <LockSolidIcon className="h-4 w-4 text-gray-500" />}
+                              {thread.title}
+                            </h3>
+                          </Link>
                           <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
                             <span className="font-medium text-gray-700">{thread.author}</span>
                             <span>{thread.authorRole}</span>
@@ -403,11 +406,11 @@ const Forum = () => {
                       <p className="text-gray-600 text-sm mb-3 line-clamp-2">{thread.content}</p>
 
                       {/* Tags */}
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-3">
                         {thread.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer transition-colors"
+                            className="inline-flex items-center px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer transition-colors"
                           >
                             #{tag}
                           </span>
@@ -415,8 +418,8 @@ const Forum = () => {
                       </div>
 
                       {/* Thread Stats and Last Reply */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-6 text-sm">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mt-3">
+                        <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm">
                           <span className="flex items-center gap-1 text-gray-500">
                             <EyeIcon className="h-4 w-4" />
                             {thread.views.toLocaleString()}
@@ -431,7 +434,7 @@ const Forum = () => {
                           </span>
                         </div>
                         {thread.lastReply && (
-                          <div className="text-sm text-gray-500">
+                          <div className="text-xs sm:text-sm text-gray-500 text-right sm:text-left">
                             Last reply by <span className="font-medium text-gray-700">{thread.lastReply.author}</span> {thread.lastReply.time}
                           </div>
                         )}

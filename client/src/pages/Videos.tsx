@@ -305,14 +305,14 @@ const Videos = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">{videos[0].title}</h4>
-                  <p className="text-gray-600 text-sm mb-4">{videos[0].description}</p>
+                  <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2">{videos[0].title}</h4>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-4 line-clamp-2">{videos[0].description}</p>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-gray-500">
                       <span>{videos[0].instructor}</span>
-                      <span>•</span>
+                      <span className="hidden sm:inline">•</span>
                       <span>{videos[0].views.toLocaleString()} views</span>
-                      <span>•</span>
+                      <span className="hidden sm:inline">•</span>
                       <span>{videos[0].uploadDate}</span>
                     </div>
                     <button 
@@ -328,7 +328,7 @@ const Videos = () => {
           )}
 
           {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
             {filteredVideos.map((video) => (
               <div
                 key={video.id}
@@ -357,8 +357,8 @@ const Videos = () => {
                   </div>
                 </div>
                 <div className="p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-base font-semibold text-gray-900 line-clamp-2 flex-1">
+                  <div className="flex items-start justify-between mb-2 gap-2">
+                    <h4 className="text-sm sm:text-base font-semibold text-gray-900 line-clamp-2 flex-1">
                       {video.title}
                     </h4>
                     <button
@@ -387,17 +387,17 @@ const Videos = () => {
                     <span className="text-xs text-gray-500">{video.category}</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3 text-gray-500">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-500 text-xs sm:text-sm">
                       <span>{video.instructor}</span>
                       <div className="flex items-center">
                         <StarSolidIcon className="h-4 w-4 text-yellow-400 mr-1" />
                         <span>{video.rating}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 text-gray-500">
-                      <span>{video.views.toLocaleString()} views</span>
-                      <span>{video.uploadDate}</span>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-500 text-xs sm:text-sm">
+                      <span className="whitespace-nowrap">{video.views.toLocaleString()} views</span>
+                      <span className="whitespace-nowrap">{video.uploadDate}</span>
                     </div>
                   </div>
                 </div>

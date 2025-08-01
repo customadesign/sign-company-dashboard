@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Hanging rod/bracket -->
+  <rect x="14" y="0" width="4" height="4" fill="#333333" rx="0.5"/>
+  
+  <!-- Sign board with rounded corners -->
+  <g>
+    <!-- Main sign background -->
+    <rect x="2" y="6" width="28" height="20" rx="2" fill="#1e40af" stroke="#1e3a8a" stroke-width="1"/>
+    
+    <!-- Inner border for depth -->
+    <rect x="4" y="8" width="24" height="16" rx="1" fill="none" stroke="#3b82f6" stroke-width="0.5" opacity="0.6"/>
+    
+    <!-- Text "SIGN" stylized -->
+    <text x="16" y="19" font-family="Arial, sans-serif" font-size="8" font-weight="bold" text-anchor="middle" fill="white">SIGN</text>
+    
+    <!-- Decorative corner bolts -->
+    <circle cx="5" cy="9" r="0.8" fill="#94a3b8"/>
+    <circle cx="27" cy="9" r="0.8" fill="#94a3b8"/>
+    <circle cx="5" cy="23" r="0.8" fill="#94a3b8"/>
+    <circle cx="27" cy="23" r="0.8" fill="#94a3b8"/>
+  </g>
+  
+  <!-- Chain/connection from rod to sign -->
+  <line x1="16" y1="4" x2="16" y2="6" stroke="#666666" stroke-width="1.5"/>
+</svg>

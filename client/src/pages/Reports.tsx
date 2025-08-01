@@ -174,9 +174,9 @@ const Reports = () => {
                     selectedReport === section.id ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'
                   }`}
                 />
-                <div className="text-left">
-                  <div>{section.name}</div>
-                  <div className={`text-xs mt-0.5 ${
+                <div className="text-left min-w-0">
+                  <div className="truncate">{section.name}</div>
+                  <div className={`text-xs mt-0.5 line-clamp-2 ${
                     selectedReport === section.id ? 'text-primary-600' : 'text-gray-500'
                   }`}>
                     {section.description}

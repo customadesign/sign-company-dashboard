@@ -236,25 +236,25 @@ const FAQs = () => {
       </div>
 
       {/* Quick Help Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">
           <PhoneIcon className="h-10 w-10 text-primary-600 mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Call Support</h3>
-          <p className="text-gray-600 text-sm mb-4">Speak directly with our support team</p>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Call Support</h3>
+          <p className="text-gray-600 text-xs sm:text-sm mb-4">Speak directly with our support team</p>
           <p className="text-primary-600 font-medium">1-800-SIGNWORLD</p>
           <p className="text-xs text-gray-500 mt-1">Mon-Fri 8AM-6PM EST</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">
           <EnvelopeIcon className="h-10 w-10 text-primary-600 mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Email Support</h3>
-          <p className="text-gray-600 text-sm mb-4">Get help via email</p>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Email Support</h3>
+          <p className="text-gray-600 text-xs sm:text-sm mb-4">Get help via email</p>
           <p className="text-primary-600 font-medium">support@signcompany.com</p>
           <p className="text-xs text-gray-500 mt-1">Response within 24 hours</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">
           <DocumentTextIcon className="h-10 w-10 text-primary-600 mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Documentation</h3>
-          <p className="text-gray-600 text-sm mb-4">Browse our resource library</p>
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">Documentation</h3>
+          <p className="text-gray-600 text-xs sm:text-sm mb-4">Browse our resource library</p>
           <p className="text-primary-600 font-medium">View Resources →</p>
           <p className="text-xs text-gray-500 mt-1">Guides, templates & more</p>
         </div>
@@ -318,7 +318,7 @@ const FAQs = () => {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 pr-4">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                      <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 pr-4">
                         {faq.question}
                       </h4>
                       <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -342,12 +342,12 @@ const FAQs = () => {
                       <p className="text-gray-600 whitespace-pre-line">{faq.answer}</p>
                       
                       <div className="mt-6 flex items-center justify-between">
-                        <div className="flex items-center gap-6">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                           <p className="text-sm text-gray-600">Was this helpful?</p>
                           <div className="flex items-center gap-4">
                             <button
                               onClick={() => handleHelpfulVote(faq.id, 'helpful')}
-                              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                                 helpfulVotes[faq.id] === 'helpful'
                                   ? 'bg-green-100 text-green-700'
                                   : 'text-gray-600 hover:bg-gray-100'
@@ -358,7 +358,7 @@ const FAQs = () => {
                             </button>
                             <button
                               onClick={() => handleHelpfulVote(faq.id, 'not-helpful')}
-                              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                                 helpfulVotes[faq.id] === 'not-helpful'
                                   ? 'bg-red-100 text-red-700'
                                   : 'text-gray-600 hover:bg-gray-100'

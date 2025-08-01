@@ -325,12 +325,12 @@ const Partners = () => {
                       </div>
                       <div className="ml-4">
                         <div className="flex items-center">
-                          <h3 className="text-xl font-bold text-gray-900">{partner.name}</h3>
+                          <h3 className="text-lg sm:text-xl font-bold text-gray-900">{partner.name}</h3>
                           {partner.isVerified && (
                             <CheckBadgeSolidIcon className="h-5 w-5 text-blue-500 ml-2" title="Verified Partner" />
                           )}
                         </div>
-                        <p className="text-sm text-gray-600">{partner.category} • Est. {partner.yearEstablished}</p>
+                        <p className="text-xs sm:text-sm text-gray-600">{partner.category} • Est. {partner.yearEstablished}</p>
                         <div className="flex items-center mt-1">
                           <div className="flex items-center">
                             {[...Array(5)].map((_, i) => (
@@ -342,7 +342,7 @@ const Partners = () => {
                               />
                             ))}
                           </div>
-                          <span className="ml-2 text-sm text-gray-600">
+                          <span className="ml-2 text-xs sm:text-sm text-gray-600">
                             {partner.rating} ({partner.reviews} reviews)
                           </span>
                         </div>
@@ -352,13 +352,13 @@ const Partners = () => {
                       <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-green-100 text-green-800">
                         {partner.discount}
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">{partner.locations} locations</p>
+                      <p className="text-xs text-gray-500 mt-1 text-center sm:text-right">{partner.locations} locations</p>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 mb-4">{partner.description}</p>
+                  <p className="text-sm sm:text-base text-gray-600 mb-4">{partner.description}</p>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                  <div className="grid grid-cols-1 gap-4 mb-4">
                     <div>
                       <h4 className="text-sm font-medium text-gray-700 mb-2">Specialties</h4>
                       <div className="flex flex-wrap gap-1">
@@ -385,8 +385,8 @@ const Partners = () => {
                     </div>
                   </div>
 
-                  <div className="border-t pt-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm">
+                  <div className="border-t pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm">
                       <button className="flex items-center text-gray-600 hover:text-primary-600 transition-colors">
                         <PhoneIcon className="h-4 w-4 mr-1" />
                         {partner.contact.phone}
@@ -400,7 +400,7 @@ const Partners = () => {
                         Email
                       </button>
                     </div>
-                    <button className="inline-flex items-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
+                    <button className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
                       View Details
                       <ChevronRightIcon className="h-4 w-4 ml-1" />
                     </button>

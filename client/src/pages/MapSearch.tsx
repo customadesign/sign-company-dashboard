@@ -208,7 +208,7 @@ const MapSearch = () => {
       {/* Search Bar */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
         <div className="space-y-4">
-          <div className="flex flex-col lg:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row lg:flex-row gap-4">
             <div className="flex-1 relative">
               <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
@@ -234,7 +234,7 @@ const MapSearch = () => {
                   <option value="100">100 miles</option>
                 </select>
               </div>
-              <button className="inline-flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200">
+              <button className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200">
                 Search
               </button>
             </div>
@@ -349,7 +349,7 @@ const MapSearch = () => {
                       {/* Location Header */}
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="font-semibold text-gray-900">{location.name}</h4>
+                          <h4 className="text-sm sm:text-base font-semibold text-gray-900 line-clamp-2">{location.name}</h4>
                           <p className="text-sm text-gray-600">{location.owner}</p>
                         </div>
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -360,13 +360,13 @@ const MapSearch = () => {
                       </div>
 
                       {/* Address and Distance */}
-                      <div className="flex items-start justify-between">
-                        <div className="text-sm text-gray-600">
+                      <div className="flex flex-col sm:flex-row items-start justify-between gap-2 sm:gap-0">
+                        <div className="text-xs sm:text-sm text-gray-600">
                           <p>{location.address}</p>
                           <p>{location.city}, {location.state} {location.zipCode}</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-lg font-semibold text-primary-600">{location.distance} mi</p>
+                        <div className="text-right sm:text-left">
+                          <p className="text-base sm:text-lg font-semibold text-primary-600">{location.distance} mi</p>
                           <div className="flex items-center mt-1">
                             <StarSolidIcon className="h-4 w-4 text-yellow-400" />
                             <span className="text-sm font-medium text-gray-700 ml-1">{location.rating}</span>
@@ -376,7 +376,7 @@ const MapSearch = () => {
                       </div>
 
                       {/* Contact Info */}
-                      <div className="flex items-center gap-4 text-sm">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm">
                         <button className="flex items-center text-gray-600 hover:text-primary-600 transition-colors">
                           <PhoneIcon className="h-4 w-4 mr-1" />
                           Call
@@ -392,7 +392,7 @@ const MapSearch = () => {
                       </div>
 
                       {/* Services Preview */}
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1 mt-2">
                         {location.services.slice(0, 3).map((service) => (
                           <span
                             key={service}
@@ -423,11 +423,11 @@ const MapSearch = () => {
             {/* Location Info */}
             <div className="lg:col-span-2 space-y-4">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedLocation.name}</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{selectedLocation.name}</h3>
                 <p className="text-gray-600">Owned by {selectedLocation.owner}</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Address</h4>
                   <p className="text-gray-600">
@@ -470,15 +470,15 @@ const MapSearch = () => {
                   <span className="text-sm text-gray-500">{selectedLocation.reviews} reviews</span>
                 </div>
                 <div className="space-y-2">
-                  <button className="w-full flex items-center justify-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors">
+                  <button className="w-full flex items-center justify-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors text-sm sm:text-base">
                     <PhoneIcon className="h-5 w-5 mr-2" />
                     {selectedLocation.phone}
                   </button>
-                  <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base">
                     <EnvelopeIcon className="h-5 w-5 mr-2" />
                     Send Email
                   </button>
-                  <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base">
                     <MapPinIcon className="h-5 w-5 mr-2" />
                     Get Directions
                   </button>

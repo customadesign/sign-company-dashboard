@@ -335,8 +335,8 @@ const Brags = () => {
               key={story.id}
               className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
             >
-              <div className="flex flex-col sm:flex-row">
-                <div className="sm:w-1/3 h-48 sm:h-auto">
+              <div className="flex flex-col">
+                <div className="w-full h-48 sm:h-64">
                   <img
                     src={story.image}
                     alt={story.title}
@@ -361,22 +361,22 @@ const Brags = () => {
                   </div>
 
                   {/* Story Content */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-primary-600 cursor-pointer transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 hover:text-primary-600 cursor-pointer transition-colors line-clamp-2">
                     {story.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{story.excerpt}</p>
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 line-clamp-2">{story.excerpt}</p>
 
                   {/* Metrics */}
                   {story.metrics && (
-                    <div className="flex flex-wrap gap-4 mb-4">
+                    <div className="flex flex-wrap gap-2 sm:gap-4 mb-4">
                       {story.metrics.revenue && (
-                        <div className="flex items-center">
+                        <div className="flex items-center text-xs sm:text-sm">
                           <div className="p-2 bg-green-100 rounded-lg">
                             <ChartBarIcon className="h-5 w-5 text-green-600" />
                           </div>
                           <div className="ml-2">
                             <p className="text-xs text-gray-500">Revenue</p>
-                            <p className="text-sm font-bold text-gray-900">{story.metrics.revenue}</p>
+                            <p className="text-sm sm:text-base font-bold text-gray-900">{story.metrics.revenue}</p>
                           </div>
                         </div>
                       )}
@@ -387,7 +387,7 @@ const Brags = () => {
                           </div>
                           <div className="ml-2">
                             <p className="text-xs text-gray-500">Growth</p>
-                            <p className="text-sm font-bold text-gray-900">{story.metrics.growth}</p>
+                            <p className="text-sm sm:text-base font-bold text-gray-900">{story.metrics.growth}</p>
                           </div>
                         </div>
                       )}
@@ -398,7 +398,7 @@ const Brags = () => {
                           </div>
                           <div className="ml-2">
                             <p className="text-xs text-gray-500">Timeframe</p>
-                            <p className="text-sm font-bold text-gray-900">{story.metrics.timeframe}</p>
+                            <p className="text-sm sm:text-base font-bold text-gray-900">{story.metrics.timeframe}</p>
                           </div>
                         </div>
                       )}
@@ -406,8 +406,8 @@ const Brags = () => {
                   )}
 
                   {/* Tags and Actions */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                    <div className="flex flex-wrap items-center gap-1 sm:gap-2">
                       {story.tags.map((tag) => (
                         <span
                           key={tag}
@@ -417,7 +417,7 @@ const Brags = () => {
                         </span>
                       ))}
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
                       <button
                         onClick={() => handleLike(story.id)}
                         className="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors"
@@ -436,7 +436,7 @@ const Brags = () => {
                       <button className="flex items-center gap-1 text-gray-500 hover:text-primary-600 transition-colors">
                         <ShareIcon className="h-5 w-5" />
                       </button>
-                      <span className="text-sm text-gray-500">{story.readTime}</span>
+                      <span className="text-xs sm:text-sm text-gray-500">{story.readTime}</span>
                     </div>
                   </div>
                 </div>

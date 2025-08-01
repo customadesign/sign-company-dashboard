@@ -64,9 +64,6 @@ const Library = () => {
   try {
     return (
       <div className="space-y-8">
-        <div style={{ backgroundColor: 'red', color: 'white', padding: '20px' }}>
-          TEST: Library component is rendering
-        </div>
       {/* Header Section */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg overflow-hidden">
         <div className="px-6 py-8 sm:px-8 sm:py-10">
@@ -88,7 +85,7 @@ const Library = () => {
       </div>
 
       {/* File Type Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {fileTypeStats.map((stat) => (
           <div key={stat.type} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
             <div className="flex items-center">
@@ -153,7 +150,7 @@ const Library = () => {
             </div>
             <div className="p-6">
               {viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {folders.map((folder) => (
                     <div
                       key={folder.id}
@@ -163,7 +160,7 @@ const Library = () => {
                         <div className="flex items-center">
                           <FolderIcon className="h-10 w-10 text-primary-600 group-hover:text-primary-700" />
                           <div className="ml-3">
-                            <h4 className="text-sm font-medium text-gray-900 group-hover:text-primary-600">
+                            <h4 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-primary-600 line-clamp-2">
                               {folder.name}
                             </h4>
                             <p className="text-xs text-gray-500">{folder.items} items</p>
@@ -188,12 +185,14 @@ const Library = () => {
                       <div className="flex items-center flex-1">
                         <FolderIcon className="h-8 w-8 text-primary-600" />
                         <div className="ml-3 flex-1">
-                          <h4 className="text-sm font-medium text-gray-900 group-hover:text-primary-600">
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-primary-600 line-clamp-2">
                             {folder.name}
                           </h4>
-                          <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-gray-500 mt-1">
                             <span>{folder.items} items</span>
+                            <span className="hidden sm:inline">•</span>
                             <span>{folder.size}</span>
+                            <span className="hidden sm:inline">•</span>
                             <span>{folder.lastModified}</span>
                           </div>
                         </div>
@@ -226,7 +225,7 @@ const Library = () => {
                     <div className="flex items-center min-w-0">
                       {getFileIcon(file.type)}
                       <div className="ml-3 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate group-hover:text-primary-600">
+                        <p className="text-xs sm:text-sm font-medium text-gray-900 truncate group-hover:text-primary-600">
                           {file.name}
                         </p>
                         <p className="text-xs text-gray-500">
@@ -234,7 +233,7 @@ const Library = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-2">
+                    <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2 ml-2">
                       <span className="text-xs text-gray-500 whitespace-nowrap">{file.modified}</span>
                       <button className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-200 rounded transition-all duration-200">
                         <ArrowDownTrayIcon className="h-4 w-4 text-gray-600" />

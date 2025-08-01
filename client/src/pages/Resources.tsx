@@ -166,8 +166,8 @@ const Resources = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-secondary-600 to-primary-600 rounded-xl shadow-lg p-8 text-white">
         <div className="max-w-4xl">
-          <h1 className="text-3xl font-bold mb-2">Resource Center</h1>
-          <p className="text-xl text-primary-100">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Resource Center</h1>
+          <p className="text-lg sm:text-xl text-primary-100">
             Access templates, guides, tools, and training materials to grow your sign business
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
@@ -280,8 +280,8 @@ const Resources = () => {
                         <span className="ml-1 text-sm font-medium text-gray-700">{resource.rating}</span>
                       </div>
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">{resource.title}</h4>
-                    <p className="text-sm text-gray-600 line-clamp-2">{resource.description}</p>
+                    <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 line-clamp-2">{resource.title}</h4>
+                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">{resource.description}</p>
                     <div className="mt-4 flex items-center justify-between">
                       <span className="text-xs text-gray-500">{resource.downloads} downloads</span>
                       <ArrowTopRightOnSquareIcon className="h-4 w-4 text-primary-600" />
@@ -315,9 +315,9 @@ const Resources = () => {
                     <div className="flex-1">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="text-lg font-semibold text-gray-900 mb-1">{resource.title}</h4>
-                          <p className="text-gray-600 text-sm mb-3">{resource.description}</p>
-                          <div className="flex items-center gap-4 text-sm">
+                          <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 line-clamp-2">{resource.title}</h4>
+                          <p className="text-gray-600 text-xs sm:text-sm mb-3 line-clamp-2">{resource.description}</p>
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm">
                             <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getTypeColor(resource.type)}`}>
                               {resource.type}
                             </span>
@@ -325,19 +325,19 @@ const Resources = () => {
                               <StarIcon className="h-4 w-4 text-yellow-500 mr-1" />
                               {resource.rating}
                             </div>
-                            <span className="text-gray-500">
+                            <span className="text-gray-500 text-xs sm:text-sm">
                               {resource.fileSize || resource.duration}
                             </span>
-                            <span className="text-gray-500">
+                            <span className="text-gray-500 text-xs sm:text-sm">
                               Updated {new Date(resource.lastUpdated).toLocaleDateString()}
                             </span>
                           </div>
                         </div>
-                        <button className="ml-4 p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors">
+                        <button className="ml-2 sm:ml-4 p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors flex-shrink-0">
                           <ArrowDownTrayIcon className="h-5 w-5" />
                         </button>
                       </div>
-                      <div className="mt-3 flex flex-wrap gap-2">
+                      <div className="mt-3 flex flex-wrap gap-1 sm:gap-2">
                         {resource.tags.map((tag) => (
                           <span
                             key={tag}

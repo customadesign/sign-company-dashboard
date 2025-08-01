@@ -660,7 +660,7 @@ const Equipment = () => {
         {/* Equipment Grid/List */}
         <div className="lg:col-span-3">
           {viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-6">
               {filteredEquipment.map((item) => (
                 <div
                   key={item.id}
@@ -696,13 +696,13 @@ const Equipment = () => {
                   <div className="p-6">
                     <div className="mb-2">
                       <span className="text-sm text-gray-500">{item.brand} • {item.model}</span>
-                      <h3 className="text-lg font-bold text-gray-900 mt-1">{item.name}</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mt-1 line-clamp-2">{item.name}</h3>
                     </div>
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">{item.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-4 line-clamp-2">{item.description}</p>
                     
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <p className="text-2xl font-bold text-gray-900">{item.price}</p>
+                        <p className="text-lg sm:text-2xl font-bold text-gray-900">{item.price}</p>
                         {item.priceNote && (
                           <p className="text-xs text-gray-500">{item.priceNote}</p>
                         )}
@@ -727,15 +727,15 @@ const Equipment = () => {
                       </span>
                     </div>
 
-                    <div className="flex gap-2">
-                      <button className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button className="flex-1 inline-flex items-center justify-center px-3 sm:px-4 py-2 border border-gray-300 text-xs sm:text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                         <InformationCircleIcon className="h-4 w-4 mr-1.5" />
                         View Details
                       </button>
                       <button
                         onClick={() => addToCart(item.id)}
                         disabled={!item.inStock}
-                        className={`flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                        className={`flex-1 inline-flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-colors ${
                           item.inStock
                             ? 'bg-primary-600 text-white hover:bg-primary-700'
                             : 'bg-gray-200 text-gray-400 cursor-not-allowed'
@@ -756,11 +756,11 @@ const Equipment = () => {
                   key={item.id}
                   className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200"
                 >
-                  <div className="flex items-start gap-6">
+                  <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-32 h-32 object-cover rounded-lg flex-shrink-0"
+                      className="w-full sm:w-32 h-48 sm:h-32 object-cover rounded-lg flex-shrink-0"
                     />
                     <div className="flex-1">
                       <div className="flex items-start justify-between">
@@ -778,7 +778,7 @@ const Equipment = () => {
                               </span>
                             )}
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
+                          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
                           <p className="text-gray-600 mb-4">{item.description}</p>
                           
                           <div className="flex items-center gap-6 text-sm">
@@ -804,11 +804,11 @@ const Equipment = () => {
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-2xl font-bold text-gray-900">{item.price}</p>
+                          <p className="text-lg sm:text-2xl font-bold text-gray-900">{item.price}</p>
                           {item.priceNote && (
                             <p className="text-sm text-gray-500">{item.priceNote}</p>
                           )}
-                          <div className="mt-4 flex items-center gap-2">
+                          <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                             <button
                               onClick={() => toggleFavorite(item.id)}
                               className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -819,13 +819,13 @@ const Equipment = () => {
                                 <HeartIcon className="h-5 w-5 text-gray-600" />
                               )}
                             </button>
-                            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                            <button className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                               View Details
                             </button>
                             <button
                               onClick={() => addToCart(item.id)}
                               disabled={!item.inStock}
-                              className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                              className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                                 item.inStock
                                   ? 'bg-primary-600 text-white hover:bg-primary-700'
                                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
