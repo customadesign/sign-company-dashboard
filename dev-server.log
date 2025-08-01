@@ -3555,3 +3555,5 @@
 [0] [32m[nodemon] starting `node server/index.js`[39m
 [0] Server running on port 9000
 [0] MongoDB Connected: ac-z4jdl5y-shard-00-01.5kcfjqh.mongodb.net
+[1] 11:10:07 AM [vite] .env changed, restarting server...
+[1] 11:10:08 AM [vite] server restarted.
