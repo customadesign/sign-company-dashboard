@@ -13,6 +13,8 @@
     "install-all": "npm install && cd client && npm install --production=false",
     "postinstall": "cd client && npm install --production=false",
     "deploy:github": "./scripts/deploy-to-github.sh",
+    "seed:events": "node server/seedEvents.js",
+    "seed:admin": "node server/seedAdmin.js",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
