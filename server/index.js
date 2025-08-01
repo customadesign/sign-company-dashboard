@@ -59,7 +59,8 @@ app.get('/health', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, '../client/dist');
   console.log('Serving static files from:', staticPath);
-  app.use(express.static(staticPath));
+  // Temporarily disable static file serving to test API
+  // app.use(express.static(staticPath));
 }
 
 // Routes - These must come AFTER static file serving but BEFORE catch-all
@@ -87,13 +88,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// SPA catch-all handler MUST come last
+// SPA catch-all handler MUST come last - temporarily disabled for API testing
 if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    const indexPath = path.join(__dirname, '../client/dist/index.html');
-    console.log('Serving index.html from:', indexPath);
-    res.sendFile(indexPath);
-  });
+  // app.get('*', (req, res) => {
+  //   const indexPath = path.join(__dirname, '../client/dist/index.html');
+  //   console.log('Serving index.html from:', indexPath);
+  //   res.sendFile(indexPath);
+  // });
 }
 
 const PORT = process.env.PORT || 5000;
