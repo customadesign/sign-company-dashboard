@@ -167,31 +167,54 @@ const OwnersRoster = () => {
   // Fetch owners from API
   const { data, isLoading, error } = useQuery({
     queryKey: ['owners', page, searchQuery, selectedTerritory, selectedSpecialties],
-    queryFn: () => getOwners({
-      page,
-      limit: 12,
-      search: searchQuery || undefined,
-      specialty: selectedSpecialties.length > 0 ? selectedSpecialties[0] : undefined,
-      state: selectedTerritory !== 'All Territories' ? selectedTerritory : undefined,
-    }),
+    queryFn: async () => {
+      try {
+        const result = await getOwners({
+          page,
+          limit: 12,
+          search: searchQuery || undefined,
+          specialty: selectedSpecialties.length > 0 ? selectedSpecialties[0] : undefined,
+          state: selectedTerritory !== 'All Territories' ? selectedTerritory : undefined,
+        });
+        console.log('Owners API response:', result);
+        return result;
+      } catch (err) {
+        console.error('Error in queryFn:', err);
+        throw err;
+      }
+    },
     staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1,
+    onError: (err: any) => {
+      console.error('Query error:', err);
+      console.error('Error stack:', err.stack);
+    },
   });
 
   // Transform API data to display format
-  const owners: OwnerDisplay[] = data?.data?.map((owner: Owner) => ({
-    ...owner,
-    id: owner._id || owner.id, // Use _id from MongoDB
-    avatar: owner.name.split(' ').map(n => n[0]).join('').toUpperCase(),
-    location: `${owner.address.city}, ${owner.address.state}`,
-    joinDate: new Date(owner.openDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-    rating: owner.rating?.averageRating || owner.stats?.averageRating || 0,
-    totalProjects: owner.stats?.projectsCompleted || 0,
-    territory: owner.address.state,
-    status: 'active' as const,
-    awards: 0,
-    certifications: [],
-    bio: `${owner.name} operates ${owner.company} in ${owner.address.city}, ${owner.address.state}.`,
-  })) || [];
+  const owners: OwnerDisplay[] = data?.data?.map((owner: Owner) => {
+    try {
+      return {
+        ...owner,
+        id: owner._id || owner.id, // Use _id from MongoDB
+        avatar: owner.name ? owner.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'NA',
+        location: owner.address ? `${owner.address.city}, ${owner.address.state}` : 'Unknown',
+        joinDate: owner.openDate ? new Date(owner.openDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Unknown',
+        rating: owner.rating?.averageRating || owner.stats?.averageRating || 0,
+        totalProjects: owner.stats?.projectsCompleted || 0,
+        territory: owner.address?.state || 'Unknown',
+        status: 'active' as const,
+        awards: 0,
+        certifications: [],
+        bio: owner.name && owner.company && owner.address 
+          ? `${owner.name} operates ${owner.company} in ${owner.address.city}, ${owner.address.state}.`
+          : 'No bio available.',
+      };
+    } catch (err) {
+      console.error('Error transforming owner data:', err, owner);
+      return null;
+    }
+  }).filter(Boolean) || [];
 
   const toggleSpecialty = (specialty: string) => {
     setSelectedSpecialties(prev =>

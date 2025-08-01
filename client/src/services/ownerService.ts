@@ -87,7 +87,12 @@ export const getOwners = async (params?: {
     }
     return response.data;
   } catch (error: any) {
+    // Enhanced error logging for debugging
     console.error('Error fetching owners:', error);
+    console.error('Error response:', error.response);
+    console.error('Error request:', error.request);
+    console.error('Error config:', error.config);
+    
     // Provide a more descriptive error message
     if (error.response?.status === 404) {
       throw new Error('Owners endpoint not found. Please check the server configuration.');
@@ -95,8 +100,16 @@ export const getOwners = async (params?: {
       throw new Error('Server error while fetching owners. Please try again later.');
     } else if (error.code === 'ERR_NETWORK') {
       throw new Error('Network error. Please check your internet connection.');
+    } else if (error.response?.status === 401) {
+      throw new Error('Authentication error. Please login and try again.');
+    } else if (error.response?.status === 403) {
+      throw new Error('Access denied. You do not have permission to view this resource.');
     } else {
-      throw new Error(error.response?.data?.error || 'Failed to fetch owners. Please try again.');
+      // Include more error details for debugging
+      const errorMessage = error.response?.data?.error || 
+                          error.message || 
+                          'Failed to fetch owners. Please try again.';
+      throw new Error(errorMessage);
     }
   }
 };

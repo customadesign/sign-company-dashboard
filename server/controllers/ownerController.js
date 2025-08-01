@@ -40,7 +40,7 @@ exports.getOwners = async (req, res) => {
     }
 
     const owners = await User.find(query)
-      .select('-password -email')
+      .select('-password')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip(startIndex);

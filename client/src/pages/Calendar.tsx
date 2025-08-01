@@ -4,7 +4,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSam
 import CalendarShareLinks from '../components/calendar/CalendarShareLinks';
 import CalendarShareLinksCompact from '../components/calendar/CalendarShareLinksCompact';
 import CalendarShareSection from '../components/calendar/CalendarShareSection';
-import { calendarService, CalendarEvent } from '../services/calendarService';
+import calendarService, { type CalendarEvent } from '../services/calendarService';
 
 // Map backend CalendarEvent to frontend Event interface
 interface Event {

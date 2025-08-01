@@ -19,7 +19,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: false,
+    sourcemap: true, // Enable sourcemaps for debugging production errors
     minify: 'terser',
     chunkSizeWarningLimit: 1600,
     rollupOptions: {
