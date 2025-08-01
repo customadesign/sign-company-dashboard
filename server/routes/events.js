@@ -155,6 +155,14 @@ router.get('/seed', async (req, res) => {
   }
 });
 
+// Test endpoint to debug route matching
+router.get('/calendar-feed', async (req, res) => {
+  res.json({
+    success: true,
+    message: 'Calendar feed endpoint is reachable'
+  });
+});
+
 // Generate iCal calendar feed (public route - must come BEFORE /:id route)
 router.get('/calendar.ics', async (req, res) => {
   try {
