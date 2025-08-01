@@ -429,7 +429,7 @@ exports.getOwnerStats = async (req, res) => {
       Rating.aggregate([
         { 
           $match: { 
-            owner: new mongoose.Types.ObjectId(id), 
+            owner: mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : id, 
             status: 'approved', 
             isPublished: true 
           } 

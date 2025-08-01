@@ -47,10 +47,15 @@ ratingSchema.index({ owner: 1, reviewer: 1 }, { unique: true });
 
 // Static method to calculate average rating for an owner
 ratingSchema.statics.getAverageRating = async function(ownerId) {
+  // Convert string ID to ObjectId
+  const ownerObjectId = mongoose.Types.ObjectId.isValid(ownerId) 
+    ? new mongoose.Types.ObjectId(ownerId) 
+    : ownerId;
+    
   const obj = await this.aggregate([
     {
       $match: { 
-        owner: ownerId,
+        owner: ownerObjectId,
         status: 'approved',
         isPublished: true
       }
