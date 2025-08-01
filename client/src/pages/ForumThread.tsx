@@ -10,7 +10,7 @@ import {
   ShareIcon,
   BellIcon,
   EllipsisHorizontalIcon,
-  ReplyIcon,
+  ChatBubbleLeftIcon,
   HeartIcon,
   EyeIcon,
   CalendarIcon,
@@ -159,7 +159,12 @@ Question about the blade pressure: do you adjust for different thicknesses of th
         author: "David Martinez",
         authorAvatar: "DM",
         authorRole: "Owner - 5 years",
-        content: "Great question, Sarah! Yes, we definitely adjust:\n- 2.5 mil: 120g\n- 3.2 mil: 130g\n- 4 mil: 140-150g\n\nThe key is doing test cuts. We keep a binder with samples and settings for quick reference.",
+        content: `Great question, Sarah! Yes, we definitely adjust:
+- 2.5 mil: 120g
+- 3.2 mil: 130g
+- 4 mil: 140-150g
+
+The key is doing test cuts. We keep a binder with samples and settings for quick reference.`,
         createdAt: "2 hours ago",
         likes: 8,
         isLiked: true,
@@ -173,7 +178,9 @@ Question about the blade pressure: do you adjust for different thicknesses of th
     author: "Mike Johnson",
     authorAvatar: "MJ",
     authorRole: "Production Manager - 3 years",
-    content: "The weeding box technique you mentioned - can you elaborate? We're always looking for ways to handle intricate designs better.\n\nAlso, what brand of LED light table did you go with? There are so many options out there.",
+    content: `The weeding box technique you mentioned - can you elaborate? We're always looking for ways to handle intricate designs better.
+
+Also, what brand of LED light table did you go with? There are so many options out there.`,
     createdAt: "2 hours ago",
     likes: 6,
     isLiked: false,
@@ -185,7 +192,11 @@ Question about the blade pressure: do you adjust for different thicknesses of th
     author: "Lisa Thompson",
     authorAvatar: "LT",
     authorRole: "Owner - 10 years",
-    content: "This is why I love this community! 🙌\n\nWe implemented something similar last year and saw huge improvements. One thing to add: we also started using a vinyl storage system with humidity control. Made a big difference in consistency.\n\nFor anyone on the fence about investing in better equipment - DO IT. The ROI is real.",
+    content: `This is why I love this community! 🙌
+
+We implemented something similar last year and saw huge improvements. One thing to add: we also started using a vinyl storage system with humidity control. Made a big difference in consistency.
+
+For anyone on the fence about investing in better equipment - DO IT. The ROI is real.`,
     createdAt: "1 hour ago",
     likes: 15,
     isLiked: true,
@@ -280,7 +291,7 @@ const ForumThread = () => {
               <span>{reply.likes}</span>
             </button>
             <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary-600">
-              <ReplyIcon className="h-4 w-4" />
+              <ChatBubbleLeftIcon className="h-4 w-4" />
               Reply
             </button>
             <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700">
