@@ -3,6 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ClockIcon, MapPinI
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek, isToday } from 'date-fns';
 import CalendarShareLinks from '../components/calendar/CalendarShareLinks';
 import CalendarShareLinksCompact from '../components/calendar/CalendarShareLinksCompact';
+import CalendarShareSection from '../components/calendar/CalendarShareSection';
 import { calendarService, CalendarEvent } from '../services/calendarService';
 
 // Map backend CalendarEvent to frontend Event interface
@@ -198,7 +199,7 @@ const Calendar = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Calendar View */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-6">
           <div className="bg-white shadow-sm rounded-xl p-6">
             {/* Calendar Navigation */}
             <div className="flex items-center justify-between mb-6">
@@ -285,15 +286,16 @@ const Calendar = () => {
               })}
             </div>
           </div>
+
+          {/* Calendar Share Section - New prominent placement below calendar */}
+          <CalendarShareSection 
+            events={events}
+            calendarName="Sign Company Calendar"
+          />
         </div>
 
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Calendar Share Links */}
-          <CalendarShareLinks 
-            events={events}
-            calendarName="Sign Company Calendar"
-          />
           
           {/* Upcoming Events */}
           <div className="bg-white shadow-sm rounded-xl p-6">
