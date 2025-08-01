@@ -55,7 +55,14 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Routes
+// Serve static assets in production BEFORE API routes to avoid conflicts
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, '../client/dist');
+  console.log('Serving static files from:', staticPath);
+  app.use(express.static(staticPath));
+}
+
+// Routes - These must come AFTER static file serving but BEFORE catch-all
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/events', require('./routes/events'));
@@ -80,15 +87,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Serve static assets in production
+// SPA catch-all handler MUST come last
 if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, '../client/dist');
-  console.log('Serving static files from:', staticPath);
-  
-  app.use(express.static(staticPath));
-  
-  // Catch-all handler for SPA routes - ONLY for non-API routes
-  app.get(/^(?!\/api\/).*/, (req, res) => {
+  app.get('*', (req, res) => {
     const indexPath = path.join(__dirname, '../client/dist/index.html');
     console.log('Serving index.html from:', indexPath);
     res.sendFile(indexPath);
