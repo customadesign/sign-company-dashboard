@@ -19,7 +19,7 @@ console.log('🔗 API Configuration:', {
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: `${API_BASE_URL}/api`,
+  baseURL: import.meta.env.DEV ? `${API_BASE_URL}/api` : '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
