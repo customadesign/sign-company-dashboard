@@ -347,7 +347,7 @@ router.get('/calendar/info', async (req, res) => {
 });
 
 // Development/admin endpoint to seed sample events (remove in production)
-router.post('/seed', async (req, res) => {
+router.get('/seed', async (req, res) => {
   try {
     // Only allow in development or with special header
     if (process.env.NODE_ENV === 'production' && req.headers['x-admin-key'] !== process.env.ADMIN_SEED_KEY) {
