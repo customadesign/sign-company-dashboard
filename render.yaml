@@ -3,7 +3,7 @@ services:
   - type: web
     name: Sign Company
     runtime: node
-    buildCommand: npm run install-all && npm run build
+    buildCommand: NODE_ENV=development npm run install-all && npm run build
     startCommand: npm start
     healthCheckPath: /health
     envVars:

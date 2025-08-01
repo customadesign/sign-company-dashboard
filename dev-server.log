@@ -3551,3 +3551,7 @@
 [0] 
 [0] Node.js v24.4.1
 [0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node server/index.js`[39m
+[0] Server running on port 9000
+[0] MongoDB Connected: ac-z4jdl5y-shard-00-01.5kcfjqh.mongodb.net
