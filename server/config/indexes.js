@@ -6,7 +6,10 @@
  */
 
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const connectDB = require('./db');
+
+dotenv.config({ path: require('path').join(__dirname, '../../.env') });
 
 // Import all models
 const User = require('../models/User');
@@ -15,6 +18,7 @@ const Event = require('../models/Event');
 const ForumThread = require('../models/ForumThread');
 const Brag = require('../models/Brag');
 const Partner = require('../models/Partner');
+const Rating = require('../models/Rating');
 
 async function createIndexes() {
   try {
@@ -22,18 +26,11 @@ async function createIndexes() {
     console.log('Creating database indexes...');
 
     // User indexes
-    await User.collection.createIndexes([
-      // Text search index
-      { name: 'text', company: 'text', specialties: 'text' },
-      // Location search
-      { 'address.state': 1, 'address.city': 1 },
-      // Specialties search
-      { specialties: 1 },
-      // Active owners
-      { role: 1, isActive: 1 },
-      // Company search
-      { company: 1 }
-    ]);
+    await User.collection.createIndex({ name: 'text', company: 'text', specialties: 'text' });
+    await User.collection.createIndex({ 'address.state': 1, 'address.city': 1 });
+    await User.collection.createIndex({ specialties: 1 });
+    await User.collection.createIndex({ role: 1, isActive: 1 });
+    await User.collection.createIndex({ company: 1 });
     console.log('✓ User indexes created');
 
     // LibraryFile indexes
@@ -109,6 +106,14 @@ async function createIndexes() {
     ]);
     console.log('✓ Partner indexes created');
 
+    // Rating indexes
+    await Rating.collection.createIndex({ owner: 1, status: 1, isPublished: 1, createdAt: -1 });
+    await Rating.collection.createIndex({ reviewer: 1, createdAt: -1 });
+    await Rating.collection.createIndex({ status: 1, createdAt: -1 });
+    await Rating.collection.createIndex({ isPublished: 1, status: 1, createdAt: -1 });
+    await Rating.collection.createIndex({ rating: 1, owner: 1 });
+    console.log('✓ Rating indexes created');
+
     console.log('\n✅ All indexes created successfully!');
     
     // List all indexes for verification
@@ -119,7 +124,8 @@ async function createIndexes() {
       { name: 'events', model: Event },
       { name: 'forumthreads', model: ForumThread },
       { name: 'brags', model: Brag },
-      { name: 'partners', model: Partner }
+      { name: 'partners', model: Partner },
+      { name: 'ratings', model: Rating }
     ];
 
     for (const { name, model } of collections) {
