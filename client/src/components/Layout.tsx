@@ -18,6 +18,8 @@ import {
   ChartBarIcon,
   BellIcon,
   UserIcon,
+  Cog6ToothIcon,
+  CreditCardIcon,
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import AISearchBox from './AISearchBox';
@@ -236,8 +238,25 @@ const Layout = () => {
                           onClick={() => setUserMenuOpen(false)}
                         >
                           <UserIcon className="mr-3 h-4 w-4 text-gray-400" />
-                          Profile Settings
+                          Profile
                         </Link>
+                        <Link
+                          to="/settings"
+                          className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          onClick={() => setUserMenuOpen(false)}
+                        >
+                          <Cog6ToothIcon className="mr-3 h-4 w-4 text-gray-400" />
+                          Settings
+                        </Link>
+                        <Link
+                          to="/billing"
+                          className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          onClick={() => setUserMenuOpen(false)}
+                        >
+                          <CreditCardIcon className="mr-3 h-4 w-4 text-gray-400" />
+                          Billing
+                        </Link>
+                        <div className="border-t border-gray-100 my-1"></div>
                         <button
                           onClick={logout}
                           className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"

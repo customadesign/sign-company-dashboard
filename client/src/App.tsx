@@ -26,6 +26,8 @@ import Equipment from './pages/Equipment';
 import FAQs from './pages/FAQs';
 import Reports from './pages/Reports';
 import UserProfile from './pages/UserProfile';
+import Settings from './pages/Settings';
+import Billing from './pages/Billing';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -72,6 +74,8 @@ function App() {
               <Route path="equipment" element={<Equipment />} />
               <Route path="faqs" element={<FAQs />} />
               <Route path="profile" element={<UserProfile />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="billing" element={<Billing />} />
             </Route>
           </Routes>
         </AuthProvider>
