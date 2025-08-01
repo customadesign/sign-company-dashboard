@@ -1,7 +1,7 @@
 services:
   # Web service for the full-stack application
   - type: web
-    name: Sign World
+    name: Sign Company
     runtime: node
     buildCommand: npm run install-all && npm run build
     startCommand: npm start
@@ -16,7 +16,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CLIENT_URL
-        value: https://sign-world.onrender.com
+        value: https://sign-company-dashboard.onrender.com
       - key: AWS_ACCESS_KEY_ID
         sync: false
       - key: AWS_SECRET_ACCESS_KEY

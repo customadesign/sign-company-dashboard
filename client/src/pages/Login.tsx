@@ -37,12 +37,12 @@ const Login = () => {
             <div className="mb-4 p-4 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl inline-block">
               <img
                 src="https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c08634a3ff3102330f5bf.png"
-                alt="Sign World Logo"
+                alt="Sign Company Logo"
                 className="h-24 w-auto mx-auto drop-shadow-lg"
               />
             </div>
             <h2 className="text-3xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-              Sign World
+              Sign Company
             </h2>
             <p className="mt-2 text-sm text-gray-600 font-medium">
               Owner Dashboard Portal
@@ -65,7 +65,7 @@ const Login = () => {
                 type="email"
                 autoComplete="email"
                 className="mt-1 appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 sm:text-sm"
-                placeholder="admin@signworld.com"
+                placeholder="admin@signcompany.com"
               />
               {errors.email && (
                 <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
@@ -126,7 +126,7 @@ const Login = () => {
                 Demo credentials
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                admin@signworld.com / admin123
+                admin@signcompany.com / admin123
               </p>
             </div>
           </form>

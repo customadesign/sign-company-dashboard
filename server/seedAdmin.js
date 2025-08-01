@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '../.env' });
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/signworld-dashboard', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sign-company-dashboard', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -16,7 +16,7 @@ const User = require('./models/User');
 const seedAdmin = async () => {
   try {
     // Check if admin already exists
-    const adminExists = await User.findOne({ email: 'admin@signworld.com' });
+    const adminExists = await User.findOne({ email: 'admin@signcompany.com' });
     
     if (adminExists) {
       console.log('Admin user already exists!');
@@ -30,11 +30,11 @@ const seedAdmin = async () => {
     // Create admin user
     const admin = await User.create({
       name: 'Admin User',
-      email: 'admin@signworld.com',
+      email: 'admin@signcompany.com',
       password: hashedPassword,
       role: 'admin',
       phone: '555-555-0100',
-      company: 'SignWorld HQ',
+      company: 'Sign Company HQ',
       address: {
         city: 'New York',
         state: 'NY',
@@ -43,7 +43,7 @@ const seedAdmin = async () => {
     });
 
     console.log('Admin user created successfully!');
-    console.log('Email: admin@signworld.com');
+    console.log('Email: admin@signcompany.com');
     console.log('Password: admin123');
     console.log('Please change the password after first login!');
     

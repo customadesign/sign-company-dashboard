@@ -76,7 +76,7 @@ const Library = () => {
                 File Library
               </h1>
               <p className="mt-3 text-lg text-primary-100">
-                Access and manage all your SignWorld resources in one place
+                Access and manage all your Sign Company resources in one place
               </p>
             </div>
             <button className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition-colors duration-200">

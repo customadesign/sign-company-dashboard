@@ -63,7 +63,7 @@ const Layout = () => {
             <div className="flex-shrink-0">
               <img
                 src="https://storage.googleapis.com/msgsndr/DecfA7BjYEDxFe8pqRZs/media/688c08634a3ff3102330f5bf.png"
-                alt="Sign World Logo"
+                alt="Sign Company Logo"
                 className="h-12 w-auto filter brightness-0 invert drop-shadow-md"
               />
             </div>

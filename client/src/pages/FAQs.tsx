@@ -32,8 +32,8 @@ const faqs: FAQ[] = [
   // Getting Started
   {
     id: 1,
-    question: "What is SignWorld and how does it work?",
-    answer: "SignWorld is a national sign franchise network that provides franchise owners with the tools, resources, and support needed to run a successful sign business. We offer comprehensive training, marketing support, preferred vendor relationships, and a proven business model without ongoing royalty fees.",
+    question: "What is Sign Company and how does it work?",
+    answer: "Sign Company is a national sign franchise network that provides franchise owners with the tools, resources, and support needed to run a successful sign business. We offer comprehensive training, marketing support, preferred vendor relationships, and a proven business model without ongoing royalty fees.",
     category: "Getting Started",
     helpful: 156,
     notHelpful: 12,
@@ -42,7 +42,7 @@ const faqs: FAQ[] = [
   {
     id: 2,
     question: "How do I access the owner portal for the first time?",
-    answer: "To access the owner portal, you'll receive login credentials via email after your franchise agreement is finalized. Visit the portal URL, enter your credentials, and follow the first-time setup wizard to configure your profile and preferences. If you haven't received your credentials, contact support at support@signworld.com.",
+    answer: "To access the owner portal, you'll receive login credentials via email after your franchise agreement is finalized. Visit the portal URL, enter your credentials, and follow the first-time setup wizard to configure your profile and preferences. If you haven't received your credentials, contact support at support@signcompany.com.",
     category: "Getting Started",
     helpful: 98,
     notHelpful: 5,
@@ -79,8 +79,8 @@ const faqs: FAQ[] = [
   // Pricing & Finance
   {
     id: 6,
-    question: "How does SignWorld's no-royalty model work?",
-    answer: "Unlike traditional franchises, SignWorld charges no ongoing royalty fees. You pay a one-time franchise fee for lifetime access to our brand, training, and support systems. Your only ongoing costs are optional: attending conventions, purchasing from preferred vendors (at discounted rates), and any additional training you choose. This model allows you to keep more of your profits.",
+    question: "How does Sign Company's no-royalty model work?",
+    answer: "Unlike traditional franchises, Sign Company charges no ongoing royalty fees. You pay a one-time franchise fee for lifetime access to our brand, training, and support systems. Your only ongoing costs are optional: attending conventions, purchasing from preferred vendors (at discounted rates), and any additional training you choose. This model allows you to keep more of your profits.",
     category: "Pricing & Finance",
     helpful: 245,
     notHelpful: 15,
@@ -248,7 +248,7 @@ const FAQs = () => {
           <EnvelopeIcon className="h-10 w-10 text-primary-600 mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Email Support</h3>
           <p className="text-gray-600 text-sm mb-4">Get help via email</p>
-          <p className="text-primary-600 font-medium">support@signworld.com</p>
+          <p className="text-primary-600 font-medium">support@signcompany.com</p>
           <p className="text-xs text-gray-500 mt-1">Response within 24 hours</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">

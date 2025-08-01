@@ -1,7 +1,7 @@
 {
-  "name": "signworld-dashboard",
+  "name": "sign-company-dashboard",
   "version": "1.0.0",
-  "description": "Modern internal dashboard for Signworld Owners",
+  "description": "Modern internal dashboard for Sign Company Owners",
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -12,7 +12,7 @@
     "install-all": "npm install && cd client && npm install",
     "postinstall": "npm run install-all"
   },
-  "keywords": ["dashboard", "signworld", "mern"],
+  "keywords": ["dashboard", "sign-company", "mern"],
   "author": "",
   "license": "ISC",
   "dependencies": {

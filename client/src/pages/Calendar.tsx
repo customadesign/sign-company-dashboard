@@ -49,7 +49,7 @@ const Calendar = () => {
       location: 'Las Vegas Convention Center',
       type: 'convention',
       attendees: 500,
-      description: 'The biggest Sign World event of the year! Network, learn, and celebrate.'
+      description: 'The biggest Sign Company event of the year! Network, learn, and celebrate.'
     },
     {
       id: '4',
@@ -106,7 +106,7 @@ const Calendar = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Calendar & Events</h2>
-            <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign World events</p>
+            <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign Company events</p>
           </div>
           <div className="mt-4 sm:mt-0 flex items-center space-x-3">
             <button className="inline-flex items-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">

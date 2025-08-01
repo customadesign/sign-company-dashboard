@@ -66,7 +66,7 @@ const partners: Partner[] = [
       contactPerson: "John Smith - Partner Relations"
     },
     benefits: [
-      "Exclusive SignWorld pricing",
+      "Exclusive Sign Company pricing",
       "Free technical support",
       "Same-day shipping on most orders",
       "Extended warranty programs"
@@ -297,7 +297,7 @@ const Partners = () => {
                 <StarSolidIcon className="h-8 w-8 text-yellow-500 mr-3" />
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">Featured Partners</h3>
-                  <p className="text-sm text-gray-600">Top-rated vendors with exclusive SignWorld benefits</p>
+                  <p className="text-sm text-gray-600">Top-rated vendors with exclusive Sign Company benefits</p>
                 </div>
               </div>
             </div>

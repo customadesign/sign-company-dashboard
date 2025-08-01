@@ -1,6 +1,6 @@
-# SignWorld Dashboard
+# Sign Company Dashboard
 
-A modern internal dashboard for SignWorld Owners built with the MERN stack.
+A modern internal dashboard for Sign Company Owners built with the MERN stack.
 
 ## Features
 
@@ -37,7 +37,7 @@ A modern internal dashboard for SignWorld Owners built with the MERN stack.
 1. Clone the repository:
 ```bash
 git clone [repository-url]
-cd signworld-dashboard
+cd sign-company-dashboard
 ```
 
 2. Install dependencies:
@@ -51,13 +51,13 @@ Create `.env` in the root directory:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/signworld-dashboard
+MONGODB_URI=mongodb://localhost:27017/sign-company-dashboard
 JWT_SECRET=your-super-secret-jwt-key
 JWT_EXPIRE=7d
 AWS_ACCESS_KEY_ID=your-aws-access-key
 AWS_SECRET_ACCESS_KEY=your-aws-secret-key
 AWS_REGION=us-east-1
-AWS_S3_BUCKET=signworld-dashboard-files
+AWS_S3_BUCKET=sign-company-dashboard-files
 GOOGLE_MAPS_API_KEY=your-google-maps-api-key
 CLIENT_URL=http://localhost:5173
 ```
@@ -87,7 +87,7 @@ Since only admins can create new users, you'll need to:
 ## Project Structure
 
 ```
-signworld-dashboard/
+sign-company-dashboard/
 ├── server/
 │   ├── config/         # Configuration files
 │   ├── controllers/    # Route controllers
@@ -130,4 +130,4 @@ npm run build
 
 ## License
 
-Private - SignWorld Internal Use Only
+Private - Sign Company Internal Use Only

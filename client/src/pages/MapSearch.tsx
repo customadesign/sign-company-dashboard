@@ -194,7 +194,7 @@ const MapSearch = () => {
                 Location Finder
               </h1>
               <p className="mt-3 text-lg text-primary-100">
-                Find SignWorld locations and franchise owners near you
+                Find Sign Company locations and franchise owners near you
               </p>
             </div>
             <button className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition-colors duration-200">

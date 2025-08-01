@@ -54,7 +54,7 @@ const equipment: Equipment[] = [
     brand: "Roland",
     model: "VG3-640",
     price: "$19,995",
-    priceNote: "Special SignWorld pricing",
+    priceNote: "Special Sign Company pricing",
     image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=800&q=80",
     description: "64-inch eco-solvent printer/cutter ideal for vinyl graphics, banners, vehicle wraps, and decals.",
     features: [

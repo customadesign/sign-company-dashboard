@@ -171,7 +171,7 @@ const Convention = () => {
       <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl shadow-lg p-8 text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Sign World Convention 2025</h1>
+            <h1 className="text-4xl font-bold mb-2">Sign Company Convention 2025</h1>
             <p className="text-xl mb-4 text-primary-100">Innovate. Connect. Grow.</p>
             <div className="flex items-center space-x-6 text-sm">
               <div className="flex items-center">
@@ -259,7 +259,7 @@ const Convention = () => {
               <div className="prose max-w-none">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">About the Convention</h3>
                 <p className="text-gray-600 mb-4">
-                  Join us for the most anticipated Sign World event of the year! The 2025 Annual Convention brings together 
+                  Join us for the most anticipated Sign Company event of the year! The 2025 Annual Convention brings together 
                   sign industry professionals from across the nation for two days of learning, networking, and innovation.
                 </p>
                 <p className="text-gray-600 mb-4">
@@ -386,7 +386,7 @@ const Convention = () => {
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-2">Reserve Your Spot</h3>
-                <p className="text-gray-600">Join us for an unforgettable experience at Sign World Convention 2025</p>
+                <p className="text-gray-600">Join us for an unforgettable experience at Sign Company Convention 2025</p>
               </div>
 
               {!isRegistered ? (
@@ -446,7 +446,7 @@ const Convention = () => {
                   </div>
                   <h4 className="text-xl font-semibold text-gray-900 mb-2">Registration Complete!</h4>
                   <p className="text-gray-600 mb-6">
-                    Thank you for registering for Sign World Convention 2025. 
+                    Thank you for registering for Sign Company Convention 2025. 
                     We've sent a confirmation email with your ticket details.
                   </p>
                   <div className="inline-flex items-center space-x-4">

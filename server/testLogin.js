@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '../.env' });
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/signworld-dashboard', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sign-company-dashboard', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -16,7 +16,7 @@ const User = require('./models/User');
 const testLogin = async () => {
   try {
     // Find admin user
-    const admin = await User.findOne({ email: 'admin@signworld.com' }).select('+password');
+    const admin = await User.findOne({ email: 'admin@signcompany.com' }).select('+password');
     
     if (!admin) {
       console.log('Admin user not found!');

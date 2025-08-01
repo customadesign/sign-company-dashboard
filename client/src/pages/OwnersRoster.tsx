@@ -56,7 +56,7 @@ const owners: Owner[] = [
     territory: "Phoenix Metro",
     status: "active",
     awards: 3,
-    certifications: ["3M Certified", "OSHA Certified", "SignWorld Elite"],
+    certifications: ["3M Certified", "OSHA Certified", "Sign Company Elite"],
     bio: "Leading the Arizona market with innovative signage solutions and exceptional customer service."
   },
   {
@@ -75,7 +75,7 @@ const owners: Owner[] = [
     territory: "Seattle & Tacoma",
     status: "active",
     awards: 5,
-    certifications: ["ISA Certified", "UL Listed", "SignWorld Master"],
+    certifications: ["ISA Certified", "UL Listed", "Sign Company Master"],
     bio: "Specializing in high-tech digital signage solutions for the Pacific Northwest's leading businesses."
   },
   {
@@ -94,7 +94,7 @@ const owners: Owner[] = [
     territory: "Miami-Dade County",
     status: "new",
     awards: 1,
-    certifications: ["3M Certified", "SignWorld Professional"],
+    certifications: ["3M Certified", "Sign Company Professional"],
     bio: "Bringing vibrant, creative signage to South Florida with a focus on quality and innovation."
   },
   {
@@ -113,7 +113,7 @@ const owners: Owner[] = [
     territory: "Central Texas",
     status: "active",
     awards: 7,
-    certifications: ["ISA Elite", "OSHA Certified", "SignWorld Master", "LEED AP"],
+    certifications: ["ISA Elite", "OSHA Certified", "Sign Company Master", "LEED AP"],
     bio: "A decade of excellence in commercial signage, serving Austin's fastest-growing businesses."
   }
 ];
@@ -178,7 +178,7 @@ const OwnersRoster = () => {
                 Owners Roster
               </h1>
               <p className="mt-3 text-lg text-primary-100">
-                Connect with SignWorld franchise owners across the country
+                Connect with Sign Company franchise owners across the country
               </p>
             </div>
             <button className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition-colors duration-200">

@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '../.env' });
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/signworld-dashboard', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sign-company-dashboard', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -16,7 +16,7 @@ const User = require('./models/User');
 const fixAdmin = async () => {
   try {
     // Delete existing admin
-    await User.deleteOne({ email: 'admin@signworld.com' });
+    await User.deleteOne({ email: 'admin@signcompany.com' });
     
     // Create new admin with direct save
     const salt = await bcrypt.genSalt(10);
@@ -24,11 +24,11 @@ const fixAdmin = async () => {
     
     const admin = new User({
       name: 'Admin User',
-      email: 'admin@signworld.com',
+      email: 'admin@signcompany.com',
       password: hashedPassword,
       role: 'admin',
       phone: '555-555-0100',
-      company: 'Sign World HQ',
+      company: 'Sign Company HQ',
       address: {
         city: 'New York',
         state: 'NY',
@@ -40,7 +40,7 @@ const fixAdmin = async () => {
     await admin.save({ validateBeforeSave: false });
 
     console.log('Admin user created successfully!');
-    console.log('Email: admin@signworld.com');
+    console.log('Email: admin@signcompany.com');
     console.log('Password: admin123');
     
     process.exit(0);

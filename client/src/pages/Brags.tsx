@@ -91,7 +91,7 @@ const successStories: SuccessStory[] = [
     date: "2 weeks ago",
     readTime: "6 min read",
     category: "Innovation",
-    excerpt: "We developed a revolutionary weatherproof LED display system that won the SignWorld Innovation Award and transformed our business.",
+    excerpt: "We developed a revolutionary weatherproof LED display system that won the Sign Company Innovation Award and transformed our business.",
     content: "Full story content here...",
     metrics: {
       growth: "+85%",
@@ -140,7 +140,7 @@ const Brags = () => {
                 Success Stories
               </h1>
               <p className="mt-3 text-lg text-primary-100">
-                Celebrating achievements and milestones from our SignWorld community
+                Celebrating achievements and milestones from our Sign Company community
               </p>
             </div>
             <button className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition-colors duration-200">

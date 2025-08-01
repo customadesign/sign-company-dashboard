@@ -186,7 +186,7 @@ const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({ dateRange, filter
             ))}
             <div className="mt-6 p-4 bg-green-50 rounded-lg">
               <p className="text-sm text-green-800">
-                <span className="font-semibold">89%</span> of customers would recommend SignWorld
+                <span className="font-semibold">89%</span> of customers would recommend Sign Company
               </p>
             </div>
           </div>

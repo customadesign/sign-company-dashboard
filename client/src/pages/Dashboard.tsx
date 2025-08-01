@@ -35,7 +35,7 @@ const Dashboard = () => {
             Welcome back, {user?.name}!
           </h1>
           <p className="mt-3 text-lg text-primary-100">
-            Here's what's happening in your SignWorld network today.
+            Here's what's happening in your Sign Company network today.
           </p>
         </div>
       </div>

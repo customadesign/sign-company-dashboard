@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '../.env' });
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/signworld-dashboard', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sign-company-dashboard', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -15,17 +15,17 @@ const User = require('./models/User');
 const createFreshAdmin = async () => {
   try {
     // Delete existing admin
-    await User.deleteOne({ email: 'admin@signworld.com' });
+    await User.deleteOne({ email: 'admin@signcompany.com' });
     console.log('Deleted existing admin');
     
     // Create new admin - let the model handle password hashing
     const admin = await User.create({
       name: 'Admin User',
-      email: 'admin@signworld.com',
+      email: 'admin@signcompany.com',
       password: 'admin123',  // Plain password - will be hashed by model
       role: 'admin',
       phone: '555-555-0100',
-      company: 'Sign World HQ',
+      company: 'Sign Company HQ',
       address: {
         city: 'New York',
         state: 'NY',
@@ -34,11 +34,11 @@ const createFreshAdmin = async () => {
     });
 
     console.log('Admin user created successfully!');
-    console.log('Email: admin@signworld.com');
+    console.log('Email: admin@signcompany.com');
     console.log('Password: admin123');
     
     // Test the login immediately
-    const testUser = await User.findOne({ email: 'admin@signworld.com' }).select('+password');
+    const testUser = await User.findOne({ email: 'admin@signcompany.com' }).select('+password');
     const match = await testUser.matchPassword('admin123');
     console.log('Login test:', match ? 'SUCCESS' : 'FAILED');
     

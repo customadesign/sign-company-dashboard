@@ -1,6 +1,6 @@
-# Sign World Dashboard - Deployment Guide for Render
+# Sign Company Dashboard - Deployment Guide for Render
 
-This guide will walk you through deploying the Sign World Dashboard to production using Render, MongoDB Atlas, and optionally AWS S3 for file storage.
+This guide will walk you through deploying the Sign Company Dashboard to production using Render, MongoDB Atlas, and optionally AWS S3 for file storage.
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ This guide will walk you through deploying the Sign World Dashboard to productio
    - Choose "Connect your application"
    - Copy the connection string (it looks like: `mongodb+srv://username:<password>@cluster.mongodb.net/`)
    - Replace `<password>` with your actual password
-   - Add your database name after the `/` (e.g., `/signworld-dashboard`)
+   - Add your database name after the `/` (e.g., `/sign-company-dashboard`)
 
 ## Step 2: Prepare Your Code for Deployment
 
@@ -80,7 +80,7 @@ This guide will walk you through deploying the Sign World Dashboard to productio
    - Select the repository containing your code
 
 2. **Configure the Service**
-   - **Name**: signworld-dashboard
+   - **Name**: sign-company-dashboard
    - **Region**: Choose closest to your users
    - **Branch**: main (or your default branch)
    - **Root Directory**: Leave blank
@@ -100,7 +100,7 @@ In Render dashboard, go to your service and click "Environment":
 ```bash
 NODE_ENV=production
 PORT=10000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/signworld-dashboard?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/sign-company-dashboard?retryWrites=true&w=majority
 JWT_SECRET=your-super-secret-jwt-key-change-this
 CLIENT_URL=https://your-app-name.onrender.com
 ```

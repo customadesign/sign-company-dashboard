@@ -129,7 +129,7 @@ const threads: ForumThread[] = [
   {
     id: 3,
     title: "ANNOUNCEMENT: New Partnership with 3M - Exclusive Discounts",
-    author: "SignWorld Admin",
+    author: "Sign Company Admin",
     authorAvatar: "SW",
     authorRole: "Administrator",
     category: "General Discussion",
@@ -190,7 +190,7 @@ const Forum = () => {
                 Community Forum
               </h1>
               <p className="mt-3 text-lg text-primary-100">
-                Connect, share, and learn from fellow SignWorld owners
+                Connect, share, and learn from fellow Sign Company owners
               </p>
             </div>
             <button className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition-colors duration-200">
