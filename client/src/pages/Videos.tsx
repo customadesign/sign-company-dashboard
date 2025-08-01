@@ -178,6 +178,7 @@ const Videos = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [videoList, setVideoList] = useState(videos);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleBookmark = (videoId: number) => {
     setVideoList(videoList.map(video =>
