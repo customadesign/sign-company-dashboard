@@ -2202,3 +2202,8 @@ Emitted 'error' event on Server instance at:
 
 Node.js v24.4.1
 [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+Serving static files from: /Users/harrymurphy/Library/Mobile Documents/com~apple~CloudDocs/Coding Projects/Sign World/signworld-dashboard/client/dist
+Server running on port 9000
+MongoDB Connected: ac-z4jdl5y-shard-00-00.5kcfjqh.mongodb.net
