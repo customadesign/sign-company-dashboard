@@ -126,6 +126,8 @@ export const getOwnerProfile = async (ownerId: string): Promise<Owner> => {
     return owner;
   } catch (error) {
     console.error('Error fetching owner profile:', error);
+    console.error('Owner ID:', ownerId);
+    console.error('Error details:', error.response?.data);
     throw error;
   }
 };
