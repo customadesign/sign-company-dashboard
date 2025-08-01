@@ -93,7 +93,15 @@ app.use((err, req, res, next) => {
 if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, '../client/dist');
   console.log('Serving static files from:', staticPath);
-  app.use(express.static(staticPath));
+  
+  // Only serve static files for non-API routes
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      // Skip static file serving for API routes
+      return next();
+    }
+    express.static(staticPath)(req, res, next);
+  });
   
   // SPA catch-all handler MUST come last
   app.get('*', (req, res) => {
