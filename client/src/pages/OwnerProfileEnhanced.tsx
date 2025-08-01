@@ -302,17 +302,17 @@ const OwnerProfileEnhanced = () => {
               <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-6 stats-container">
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center star-rating">
-                    {renderStars(owner.stats.averageRating)}
+                    {renderStars(owner.rating?.averageRating || owner.stats?.averageRating || 0)}
                   </div>
                   <span className="text-white font-medium">
-                    {owner.stats.averageRating} ({owner.stats.totalRatings} reviews)
+                    {owner.rating?.averageRating || owner.stats?.averageRating || 0} ({owner.rating?.totalRatings || owner.stats?.totalRatings || 0} reviews)
                   </span>
                 </div>
                 <div className="text-primary-100">
                   <span className="font-semibold text-white">{owner.yearsInBusiness}</span> years in business
                 </div>
                 <div className="text-primary-100">
-                  <span className="font-semibold text-white">{owner.stats.projectsCompleted}</span> projects completed
+                  <span className="font-semibold text-white">{owner.stats?.projectsCompleted || 0}</span> projects completed
                 </div>
               </div>
 
@@ -530,10 +530,10 @@ const OwnerProfileEnhanced = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center">
-                      {renderStars(owner.stats.averageRating)}
+                      {renderStars(owner.rating?.averageRating || owner.stats?.averageRating || 0)}
                     </div>
                     <span className="text-sm text-gray-600">
-                      {owner.stats.averageRating} out of 5 ({owner.stats.totalRatings} reviews)
+                      {owner.rating?.averageRating || owner.stats?.averageRating || 0} out of 5 ({owner.rating?.totalRatings || owner.stats?.totalRatings || 0} reviews)
                     </span>
                   </div>
                   {user && user.id !== owner.id && (
