@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   TrophyIcon,
   SparklesIcon,
@@ -102,6 +102,69 @@ const successStories: SuccessStory[] = [
     isLiked: false,
     tags: ["innovation", "technology", "awards"],
     image: "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=800&q=80"
+  },
+  {
+    id: 4,
+    title: "Giving Back: Our Community Signage Project",
+    author: "David Martinez",
+    authorAvatar: "DM",
+    location: "Austin, TX",
+    date: "3 weeks ago",
+    readTime: "4 min read",
+    category: "Community Impact",
+    excerpt: "We donated and installed new signage for 15 local nonprofits, strengthening our community ties and brand reputation.",
+    content: "Full story content here...",
+    metrics: {
+      timeframe: "3 months"
+    },
+    likes: 156,
+    comments: 28,
+    isLiked: false,
+    tags: ["community", "nonprofit", "giving-back"],
+    image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80"
+  },
+  {
+    id: 5,
+    title: "Building a Dream Team: Our Hiring Success Story",
+    author: "Lisa Thompson",
+    authorAvatar: "LT",
+    location: "Denver, CO",
+    date: "1 month ago",
+    readTime: "7 min read",
+    category: "Team Building",
+    excerpt: "How we grew from 2 to 25 employees in 18 months while maintaining our culture and quality standards.",
+    content: "Full story content here...",
+    metrics: {
+      growth: "+1150%",
+      timeframe: "18 months"
+    },
+    likes: 203,
+    comments: 41,
+    isLiked: true,
+    tags: ["team", "culture", "growth"],
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
+  },
+  {
+    id: 6,
+    title: "Overcoming Supply Chain Challenges in 2023",
+    author: "Robert Kim",
+    authorAvatar: "RK",
+    location: "Chicago, IL",
+    date: "5 weeks ago",
+    readTime: "6 min read",
+    category: "Challenges Overcome",
+    excerpt: "When material costs skyrocketed, we innovated our procurement process and found creative solutions to maintain profitability.",
+    content: "Full story content here...",
+    metrics: {
+      revenue: "$2.3M",
+      growth: "+15%",
+      timeframe: "Despite challenges"
+    },
+    likes: 178,
+    comments: 29,
+    isLiked: false,
+    tags: ["challenges", "innovation", "procurement"],
+    image: "https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80"
   }
 ];
 
@@ -119,6 +182,34 @@ const Brags = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Stories');
   const [stories, setStories] = useState(successStories);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredStories, setFilteredStories] = useState(successStories);
+
+  // Filter stories when category or search changes
+  const filterStories = () => {
+    let filtered = [...stories];
+    
+    // Filter by category
+    if (selectedCategory !== 'All Stories') {
+      filtered = filtered.filter(story => story.category === selectedCategory);
+    }
+    
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(story => 
+        story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        story.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        story.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        story.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+    
+    setFilteredStories(filtered);
+  };
+
+  // Apply filters when category or search changes
+  useEffect(() => {
+    filterStories();
+  }, [selectedCategory, searchQuery, stories]);
 
   const handleLike = (storyId: number) => {
     setStories(stories.map(story => 
@@ -126,6 +217,12 @@ const Brags = () => {
         ? { ...story, isLiked: !story.isLiked, likes: story.isLiked ? story.likes - 1 : story.likes + 1 }
         : story
     ));
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    // Scroll to top of stories when category changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -205,10 +302,10 @@ const Brags = () => {
               {categories.map((category) => (
                 <button
                   key={category.name}
-                  onClick={() => setSelectedCategory(category.name)}
+                  onClick={() => handleCategoryClick(category.name)}
                   className={`w-full text-left px-4 py-2.5 rounded-lg flex items-center justify-between transition-all duration-200 ${
                     selectedCategory === category.name
-                      ? 'bg-primary-50 text-primary-700 font-medium'
+                      ? 'bg-primary-50 text-primary-700 font-medium border-l-4 border-primary-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -226,7 +323,14 @@ const Brags = () => {
 
         {/* Stories Grid */}
         <div className="lg:col-span-3 space-y-6">
-          {stories.map((story) => (
+          {filteredStories.length === 0 ? (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+              <TrophyIcon className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No stories found</h3>
+              <p className="text-gray-500">Try adjusting your filters or search query</p>
+            </div>
+          ) : (
+            filteredStories.map((story) => (
             <article
               key={story.id}
               className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
@@ -338,7 +442,8 @@ const Brags = () => {
                 </div>
               </div>
             </article>
-          ))}
+          ))
+          )}
 
           {/* Load More */}
           <div className="text-center">

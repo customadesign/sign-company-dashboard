@@ -168,12 +168,12 @@ const Convention = () => {
   return (
     <div className="space-y-6">
       {/* Hero Section with Countdown */}
-      <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl shadow-lg p-8 text-white">
+      <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Sign Company Convention 2025</h1>
-            <p className="text-xl mb-4 text-primary-100">Innovate. Connect. Grow.</p>
-            <div className="flex items-center space-x-6 text-sm">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Sign Company Convention 2025</h1>
+            <p className="text-lg sm:text-xl mb-4 text-primary-100">Innovate. Connect. Grow.</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm">
               <div className="flex items-center">
                 <CalendarDaysIcon className="h-5 w-5 mr-2" />
                 August 22-23, 2025
@@ -188,21 +188,21 @@ const Convention = () => {
           {/* Countdown Timer */}
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
             <h3 className="text-lg font-semibold mb-4 text-center">Event Starts In</h3>
-            <div className="grid grid-cols-4 gap-4 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center">
               <div>
-                <div className="text-3xl font-bold">{countdown.days}</div>
+                <div className="text-2xl sm:text-3xl font-bold">{countdown.days}</div>
                 <div className="text-xs uppercase tracking-wide">Days</div>
               </div>
               <div>
-                <div className="text-3xl font-bold">{countdown.hours}</div>
+                <div className="text-2xl sm:text-3xl font-bold">{countdown.hours}</div>
                 <div className="text-xs uppercase tracking-wide">Hours</div>
               </div>
               <div>
-                <div className="text-3xl font-bold">{countdown.minutes}</div>
+                <div className="text-2xl sm:text-3xl font-bold">{countdown.minutes}</div>
                 <div className="text-xs uppercase tracking-wide">Minutes</div>
               </div>
               <div>
-                <div className="text-3xl font-bold">{countdown.seconds}</div>
+                <div className="text-2xl sm:text-3xl font-bold">{countdown.seconds}</div>
                 <div className="text-xs uppercase tracking-wide">Seconds</div>
               </div>
             </div>
@@ -213,13 +213,13 @@ const Convention = () => {
       {/* Navigation Tabs */}
       <div className="bg-white shadow-sm rounded-xl">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6" aria-label="Tabs">
+          <nav className="flex overflow-x-auto scrollbar-hide space-x-4 sm:space-x-8 px-4 sm:px-6" aria-label="Tabs">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
-                  flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors
+                  flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap
                   ${activeTab === tab.id
                     ? 'border-primary-600 text-primary-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -234,7 +234,7 @@ const Convention = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Overview Tab */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
@@ -306,18 +306,18 @@ const Convention = () => {
                   </div>
                   <div className="space-y-3">
                     {day.events.map((event, idx) => (
-                      <div key={idx} className="bg-white rounded-lg p-4 flex items-start space-x-4">
+                      <div key={idx} className="bg-white rounded-lg p-3 sm:p-4 flex items-start space-x-3 sm:space-x-4">
                         <div className="flex-shrink-0">
                           <span className="text-2xl">{getEventTypeIcon(event.type)}</span>
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                             <div>
                               <h4 className="font-medium text-gray-900">{event.title}</h4>
                               {event.speaker && (
                                 <p className="text-sm text-gray-600 mt-1">Speaker: {event.speaker}</p>
                               )}
-                              <div className="flex items-center mt-2 space-x-4 text-sm text-gray-500">
+                              <div className="flex flex-col sm:flex-row sm:items-center mt-2 sm:space-x-4 space-y-1 sm:space-y-0 text-xs sm:text-sm text-gray-500">
                                 <span className="flex items-center">
                                   <ClockIcon className="h-4 w-4 mr-1" />
                                   {event.time}
@@ -357,7 +357,7 @@ const Convention = () => {
                     onClick={() => setSelectedSpeaker(speaker)}
                     className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer"
                   >
-                    <div className="flex items-start space-x-4">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
                       <div className="w-24 h-24 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
                         {speaker.name.split(' ').map(n => n[0]).join('')}
                       </div>
@@ -466,8 +466,8 @@ const Convention = () => {
 
       {/* Speaker Details Modal */}
       {selectedSpeaker && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-2xl w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center sm:p-4 z-50">
+          <div className="bg-white rounded-t-xl sm:rounded-xl max-w-2xl w-full p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">Speaker Profile</h3>
               <button
@@ -480,7 +480,7 @@ const Convention = () => {
               </button>
             </div>
             
-            <div className="flex items-start space-x-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
               <div className="w-32 h-32 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
                 {selectedSpeaker.name.split(' ').map(n => n[0]).join('')}
               </div>

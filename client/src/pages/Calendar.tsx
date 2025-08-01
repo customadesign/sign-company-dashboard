@@ -108,12 +108,12 @@ const Calendar = () => {
             <h2 className="text-2xl font-bold text-gray-900">Calendar & Events</h2>
             <p className="mt-1 text-sm text-gray-600">Manage your schedule and stay updated with Sign Company events</p>
           </div>
-          <div className="mt-4 sm:mt-0 flex items-center space-x-3">
-            <button className="inline-flex items-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+          <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <button className="inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
               <CalendarDaysIcon className="h-5 w-5 mr-2" />
               Add Event
             </button>
-            <div className="flex rounded-lg border border-gray-300 overflow-hidden">
+            <div className="flex justify-center rounded-lg border border-gray-300 overflow-hidden">
               <button
                 onClick={() => setViewMode('month')}
                 className={`px-3 py-1.5 text-sm font-medium transition-colors ${
@@ -178,7 +178,7 @@ const Calendar = () => {
             <div className="grid grid-cols-7 gap-px bg-gray-200 rounded-lg overflow-hidden">
               {/* Week days */}
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className="bg-gray-50 px-2 py-3 text-center">
+                <div key={day} className="bg-gray-50 px-1 sm:px-2 py-2 sm:py-3 text-center">
                   <span className="text-xs font-semibold text-gray-700">{day}</span>
                 </div>
               ))}
@@ -195,13 +195,13 @@ const Calendar = () => {
                     key={idx}
                     onClick={() => setSelectedDate(day)}
                     className={`
-                      bg-white p-2 min-h-[100px] cursor-pointer transition-all
+                      bg-white p-1 sm:p-2 min-h-[80px] sm:min-h-[100px] cursor-pointer transition-all
                       ${!isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}
                       ${isSelected ? 'ring-2 ring-primary-500 bg-primary-50' : 'hover:bg-gray-50'}
                     `}
                   >
                     <div className={`
-                      inline-flex items-center justify-center w-8 h-8 rounded-full mb-1
+                      inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 text-xs sm:text-base rounded-full mb-1
                       ${isTodayDate ? 'bg-primary-600 text-white font-semibold' : ''}
                     `}>
                       {format(day, 'd')}
@@ -215,16 +215,16 @@ const Calendar = () => {
                             setSelectedEvent(event);
                           }}
                           className={`
-                            text-xs px-2 py-1 rounded border cursor-pointer
+                            text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded border cursor-pointer
                             ${getEventTypeColor(event.type)}
                             hover:shadow-sm transition-shadow
                           `}
                         >
-                          <p className="truncate font-medium">{event.title}</p>
+                          <p className="truncate font-medium text-[10px] sm:text-xs">{event.title}</p>
                         </div>
                       ))}
                       {dayEvents.length > 2 && (
-                        <p className="text-xs text-gray-500 px-2">+{dayEvents.length - 2} more</p>
+                        <p className="text-[10px] sm:text-xs text-gray-500 px-1 sm:px-2">+{dayEvents.length - 2} more</p>
                       )}
                     </div>
                   </div>
@@ -299,8 +299,8 @@ const Calendar = () => {
 
       {/* Event Details Modal */}
       {selectedEvent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-lg w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center sm:p-4 z-50">
+          <div className="bg-white rounded-t-xl sm:rounded-xl max-w-lg w-full p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">{selectedEvent.title}</h3>
               <button
@@ -343,11 +343,11 @@ const Calendar = () => {
               `}>
                 {selectedEvent.type}
               </span>
-              <div className="flex items-center space-x-3">
-                <button className="px-4 py-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                <button className="px-4 py-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors text-center">
                   Edit
                 </button>
-                <button className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                <button className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-center">
                   Join Event
                 </button>
               </div>
