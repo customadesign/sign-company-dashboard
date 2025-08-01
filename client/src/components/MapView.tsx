@@ -5,20 +5,20 @@ import L from 'leaflet';
 // Import leaflet CSS - for Vite/TypeScript compatibility
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers in React-Leaflet
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+// Fix for default markers in React-Leaflet - use require for better compatibility
+const iconUrl = require('leaflet/dist/images/marker-icon.png');
+const iconRetinaUrl = require('leaflet/dist/images/marker-icon-2x.png');
+const shadowUrl = require('leaflet/dist/images/marker-shadow.png');
 
-const DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+// Delete default icon settings
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+// Set new default icon options
+L.Icon.Default.mergeOptions({
+  iconUrl: iconUrl,
+  iconRetinaUrl: iconRetinaUrl,
+  shadowUrl: shadowUrl,
 });
-
-L.Marker.prototype.options.icon = DefaultIcon;
 
 interface Location {
   id: number;
