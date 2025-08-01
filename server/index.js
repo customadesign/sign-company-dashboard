@@ -69,6 +69,7 @@ app.use('/api/partners', require('./routes/partners'));
 app.use('/api/videos', require('./routes/videos'));
 app.use('/api/equipment', require('./routes/equipment'));
 app.use('/api/faqs', require('./routes/faqs'));
+app.use('/api/search', require('./routes/search'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

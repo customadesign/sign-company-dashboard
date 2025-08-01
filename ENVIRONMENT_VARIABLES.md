@@ -12,6 +12,16 @@ VITE_API_URL=https://sign-company.onrender.com/api
 CLIENT_URL=https://sign-company.onrender.com
 ```
 
+## AI Search Configuration (Required for Search Feature)
+
+```
+# OpenRouter API for AI-powered search
+OPENROUTER_API_KEY=your-openrouter-api-key
+
+# Redis URL for caching (optional - falls back to in-memory cache)
+REDIS_URL=redis://localhost:6379
+```
+
 ## Optional Variables
 
 ```
