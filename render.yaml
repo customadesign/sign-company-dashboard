@@ -3,7 +3,7 @@ services:
   - type: web
     name: Sign Company
     runtime: node
-    buildCommand: NODE_ENV=development npm run install-all && npm run build
+    buildCommand: NODE_ENV=development npm run install-all && NODE_ENV=production npm run build
     startCommand: npm start
     healthCheckPath: /health
     envVars:
@@ -16,6 +16,8 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CLIENT_URL
-        value: https://sign-company-dashboard.onrender.com
+        value: https://sign-company.onrender.com
       - key: GOOGLE_MAPS_API_KEY
         sync: false
+      - key: VITE_API_URL
+        value: https://sign-company.onrender.com/api
