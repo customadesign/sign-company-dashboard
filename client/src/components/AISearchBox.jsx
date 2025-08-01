@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Sparkles, FileText, User, Calendar, MessageSquare, TrendingUp } from 'lucide-react';
+import { Search, X, Sparkles, FileText, User, Calendar, MessageSquare, TrendingUp, Mic, Command, Zap } from 'lucide-react';
 import useOpenRouter from '../hooks/useOpenRouter';
 import './AISearchBox.css';
 
-const AISearchBox = () => {
+const AISearchBox = ({ compact = false, onSearchFocus }) => {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [showQuickActions, setShowQuickActions] = useState(false);
   const searchRef = useRef(null);
   const inputRef = useRef(null);
   
@@ -39,7 +41,26 @@ const AISearchBox = () => {
       setIsOpen(false);
       inputRef.current?.blur();
     }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      inputRef.current?.focus();
+      setIsOpen(true);
+    }
   };
+
+  // Global keyboard shortcut
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+        setIsOpen(true);
+      }
+    };
+    
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   const getCategoryIcon = (type) => {
     const icons = {
@@ -55,16 +76,41 @@ const AISearchBox = () => {
   const handleResultClick = (result) => {
     // Navigate to the result
     window.location.href = result.link;
+    setIsOpen(false);
+    setQuery('');
+  };
+
+  const handleVoiceSearch = () => {
+    setIsVoiceActive(!isVoiceActive);
+    // Voice search implementation would go here
+    setTimeout(() => setIsVoiceActive(false), 3000);
+  };
+
+  const quickActions = [
+    { label: 'Search Files', icon: FileText, query: 'files:' },
+    { label: 'Find People', icon: User, query: 'people:' },
+    { label: 'Events', icon: Calendar, query: 'events:' },
+    { label: 'Forum Posts', icon: MessageSquare, query: 'forum:' }
+  ];
+
+  const handleQuickAction = (action) => {
+    setQuery(action.query);
+    inputRef.current?.focus();
+    setShowQuickActions(false);
+    setIsOpen(true);
   };
 
   return (
-    <div className="ai-search-container" ref={searchRef}>
-      <div className={`ai-search-box ${isFocused ? 'focused' : ''}`}>
-        <Search className="search-icon" />
+    <div className={`ai-search-container ${compact ? 'compact' : ''}`} ref={searchRef}>
+      <div className={`ai-search-box ${isFocused ? 'focused' : ''} ${compact ? 'compact' : ''}`}>
+        <div className="search-icon-wrapper">
+          <Search className="search-icon" />
+        </div>
+        
         <input
           ref={inputRef}
           type="text"
-          placeholder="Ask anything... (e.g., 'Find marketing files from last month')"
+          placeholder={compact ? "Search with AI..." : "Ask anything... (e.g., 'Find marketing files from last month')"}
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -72,38 +118,114 @@ const AISearchBox = () => {
           }}
           onFocus={() => {
             setIsFocused(true);
-            if (query) setIsOpen(true);
+            onSearchFocus?.();
+            if (query || !query) {
+              setIsOpen(true);
+              setShowQuickActions(!query);
+            }
           }}
-          onBlur={() => setIsFocused(false)}
+          onBlur={() => {
+            setIsFocused(false);
+            setTimeout(() => setShowQuickActions(false), 200);
+          }}
           onKeyDown={handleKeyDown}
           className="search-input"
         />
-        {query && (
+        
+        <div className="search-actions">
+          {query && (
+            <button
+              className="clear-button"
+              onClick={() => {
+                setQuery('');
+                inputRef.current?.focus();
+              }}
+            >
+              <X size={16} />
+            </button>
+          )}
+          
           <button
-            className="clear-button"
-            onClick={() => {
-              setQuery('');
-              inputRef.current?.focus();
-            }}
+            className={`voice-button ${isVoiceActive ? 'active' : ''}`}
+            onClick={handleVoiceSearch}
+            title="Voice search"
           >
-            <X size={16} />
+            <Mic size={16} />
+            {isVoiceActive && <div className="voice-pulse" />}
           </button>
-        )}
-        <div className="ai-badge">
-          <Sparkles size={14} />
-          <span>AI</span>
+          
+          {!compact && (
+            <div className="keyboard-shortcut">
+              <Command size={12} />
+              <span>K</span>
+            </div>
+          )}
         </div>
+        
+        <button 
+          className="ai-badge"
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen(false);
+              setQuery('');
+              setShowQuickActions(false);
+              inputRef.current?.blur();
+            } else {
+              inputRef.current?.focus();
+              setIsOpen(true);
+              setShowQuickActions(!query);
+            }
+          }}
+          title="Toggle AI Search"
+        >
+          <motion.div
+            animate={{ rotate: isFocused ? 360 : 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Sparkles size={14} />
+          </motion.div>
+          <span>AI</span>
+          <motion.div 
+            className="ai-pulse"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </button>
       </div>
 
       <AnimatePresence>
-        {isOpen && (query || searchResults.length > 0) && (
+        {isOpen && (query || searchResults.length > 0 || showQuickActions) && (
           <motion.div
-            className="search-dropdown"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            className={`search-dropdown ${compact ? 'compact' : ''}`}
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
+            {/* Quick Actions - shown when input is empty */}
+            {showQuickActions && !query && (
+              <div className="quick-actions">
+                <div className="quick-actions-header">
+                  <Zap size={14} />
+                  <span>Quick Actions</span>
+                </div>
+                <div className="quick-actions-grid">
+                  {quickActions.map((action, index) => (
+                    <motion.button
+                      key={action.label}
+                      className="quick-action-item"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      onClick={() => handleQuickAction(action)}
+                    >
+                      <action.icon size={16} />
+                      <span>{action.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+            )}
             {isLoading && (
               <div className="loading-state">
                 <div className="loading-spinner" />
@@ -163,12 +285,17 @@ const AISearchBox = () => {
               </div>
             )}
 
-            {query && (
+            {(query || showQuickActions) && (
               <div className="search-footer">
-                <span className="ai-hint">
+                <div className="ai-hint">
                   <Sparkles size={12} />
-                  Powered by AI - Try natural language queries
-                </span>
+                  <span>Powered by AI - Try natural language queries</span>
+                </div>
+                {!compact && (
+                  <div className="search-tips">
+                    <span className="tip">Try: "Show me files from John" or "Events next week"</span>
+                  </div>
+                )}
               </div>
             )}
           </motion.div>

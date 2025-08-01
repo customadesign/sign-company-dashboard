@@ -16,8 +16,10 @@ import {
   UsersIcon,
   BookOpenIcon,
   ChartBarIcon,
+  BellIcon,
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import AISearchBox from './AISearchBox';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -104,7 +106,7 @@ const Layout = () => {
             </div>
           </nav>
 
-          {/* User Profile Section */}
+          {/* User Profile Section - Sidebar */}
           <div className="border-t border-gray-200 bg-gray-50">
             <div className="relative">
               <button
@@ -151,11 +153,12 @@ const Layout = () => {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
           <div className="flex h-16 items-center px-4 sm:px-6 lg:px-8">
+            {/* Mobile menu button */}
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 md:hidden"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 md:hidden transition-colors"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
@@ -164,10 +167,70 @@ const Layout = () => {
               </svg>
             </button>
 
-            <div className="flex-1 px-4 md:px-0">
-              <h2 className="text-lg font-medium text-gray-900">
+            {/* Page title - shows on larger screens */}
+            <div className="hidden lg:block min-w-0 mr-8">
+              <h2 className="text-lg font-semibold text-gray-900 truncate">
                 {navigation.find((item) => item.href === location.pathname)?.name || 'Dashboard'}
               </h2>
+            </div>
+
+            {/* AI Search Box - takes center stage */}
+            <div className="flex-1 max-w-2xl mx-4">
+              <AISearchBox compact={true} onSearchFocus={() => {}} />
+            </div>
+
+            {/* Right side actions */}
+            <div className="flex items-center space-x-3">
+              {/* Notifications */}
+              <button
+                type="button"
+                className="relative p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                title="Notifications"
+              >
+                <span className="sr-only">View notifications</span>
+                <BellIcon className="h-5 w-5" />
+                {/* Notification badge */}
+                <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white animate-pulse"></span>
+              </button>
+
+              {/* User menu */}
+              <div className="relative">
+                <button
+                  type="button"
+                  className="flex items-center space-x-2 p-1 text-sm rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                >
+                  <img
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-gray-200 hover:ring-primary-300 transition-all"
+                    src="https://i.pravatar.cc/150?img=8"
+                    alt={user?.name || 'User profile'}
+                  />
+                  <div className="hidden sm:block text-left">
+                    <p className="text-sm font-medium text-gray-900">{user?.name || 'Guest'}</p>
+                    <p className="text-xs text-gray-500">{user?.role || 'User'}</p>
+                  </div>
+                  <ChevronDownIcon className="h-4 w-4 text-gray-400 hidden sm:block" />
+                </button>
+
+                {/* User dropdown */}
+                {userMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 rounded-lg bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-medium text-gray-900">{user?.name || 'Guest User'}</p>
+                      <p className="text-xs text-gray-500">{user?.email || 'Not logged in'}</p>
+                    </div>
+                    {user && (
+                      <button
+                        onClick={logout}
+                        className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <ArrowRightOnRectangleIcon className="mr-3 h-4 w-4 text-gray-400" />
+                        Sign out
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </header>
